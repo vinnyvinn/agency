@@ -17,6 +17,7 @@ class CreateSavedInWardsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('bill_of_landing_id');
             $table->text('data');
+            $table->boolean('toggle_type')->nullable()->default(0);
             $table->timestamps();
         });
     }

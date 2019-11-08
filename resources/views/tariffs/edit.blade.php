@@ -28,9 +28,8 @@
                                     <div class="form-group">
                                         <label for="type">Tariff Type</label>
                                         <select name="type" required id="type" class="form-control">
-                                            <option value="">Select Tariff Type</option>
-                                            <option {{ $tariff->type == \Esl\helpers\Constants::TARIFF_INTERNAL ? 'selected' : '' }}value="{{ \Esl\helpers\Constants::TARIFF_INTERNAL }}">Internal</option>
-                                            <option {{ $tariff->type == \Esl\helpers\Constants::TARIFF_KPA ? 'selected' : '' }}value="{{ \Esl\helpers\Constants::TARIFF_KPA }}">KPA</option>
+                                              <option {{ $tariff->type == \Esl\helpers\Constants::TARIFF_INTERNAL ? 'selected="selected"' : '' }}value="{{ \Esl\helpers\Constants::TARIFF_INTERNAL }}">Internal</option>
+                                            <option {{ $tariff->type == \Esl\helpers\Constants::TARIFF_KPA ? 'selected="selected"' : '' }}value="{{ \Esl\helpers\Constants::TARIFF_KPA }}">KPA</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -44,18 +43,15 @@
                                         <label for="unit_type">Tariff GRT/LOA</label>
                                         <select name="unit_type" required id="unit_type" class="form-control">
                                             <option value="">Select Tariff Type</option>
-                                            <option value="{{ \Esl\helpers\Constants::TARIFF_UNIT_TYPE_LUMPSUM }}">Lumpsum</option>
-                                            <option value="{{ \Esl\helpers\Constants::TARIFF_UNIT_TYPE_GRT }}">GRT</option>
-                                            <option value="{{ \Esl\helpers\Constants::TARIFF_UNIT_TYPE_LOA }}">LOA</option>
-                                            <option value="{{ \Esl\helpers\Constants::TARIFF_UNIT_TYPE_PERDAY }}">Per Day</option>
-                                            {{--per each unit--}}
-                                            <option value="Per Unit">Per Unit</option>
-                                            {{--per first unit--}}
-                                            <option value="First GRT">First GRT</option>
-                                            {{--<option value="First Days">First Days</option>--}}
-                                            <option value="Thereafter GRT">Thereafter GRT</option>
-                                            <option value="Thereafter Days">Days</option>
-                                        </select>
+                                            <option {{ $tariff->unit_type == \Esl\helpers\Constants::TARIFF_UNIT_TYPE_LUMPSUM ? 'selected="selected"' : '' }} value="{{ \Esl\helpers\Constants::TARIFF_UNIT_TYPE_LUMPSUM }}">Lumpsum</option>
+                                            <option {{ $tariff->unit_type == \Esl\helpers\Constants::TARIFF_UNIT_TYPE_GRT ? 'selected="selected"' : '' }} value="{{ \Esl\helpers\Constants::TARIFF_UNIT_TYPE_GRT }}">GRT</option>
+                                            <option {{ $tariff->unit_type == \Esl\helpers\Constants::TARIFF_UNIT_TYPE_LOA ? 'selected="selected"' : '' }} value="{{ \Esl\helpers\Constants::TARIFF_UNIT_TYPE_LOA }}">LOA</option>
+                                            <option {{ $tariff->unit_type == \Esl\helpers\Constants::TARIFF_UNIT_TYPE_PERDAY ? 'selected="selected"' : '' }} value="{{ \Esl\helpers\Constants::TARIFF_UNIT_TYPE_PERDAY}}">Per Day</option>
+                                            <option {{ $tariff->unit_type == 'Per Unit' ? 'selected="selected"' : '' }} value="Per Unit">Per Unit</option>
+                                            <option {{ $tariff->unit_type == 'First GRT' ? 'selected="selected"' : '' }} value="First GRT">First GRT</option>
+                                            <option {{ $tariff->unit_type == 'Thereafter GRT' ? 'selected="selected"' : '' }} value="Thereafter GRT">Thereafter GRT</option>
+                                            <option {{ $tariff->unit_type == 'Thereafter Days' ? 'selected="selected"' : '' }} value="Thereafter Days">Thereafter Days</option>
+                                             </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">

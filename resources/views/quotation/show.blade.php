@@ -31,7 +31,7 @@
                                     <ul class="nav nav-tabs" role="tablist">
                                         <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Vessel Details</span></a> </li>
                                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Cargo / Consignee Details</span></a> </li>
-                                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Voyage Details</span></a> </li>
+                                        <li style="display: none" class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Voyage Details</span></a> </li>
                                     </ul>
                                     <div class="tab-content tabcontent-border">
                                         <div class="tab-pane active" id="home" role="tabpanel">
@@ -259,15 +259,15 @@
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="consignee_name">Consignee Name</label>
-                                                                                <input type="text" id="consignee_name" name="consignee_name" value="" required class="form-control">
+                                                                                <input type="text" id="consignee_name" name="consignee_name"  class="form-control">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="consignee_tel">Consignee Telephone</label>
-                                                                                <input type="text" id="consignee_tel" name="consignee_tel" value="" required class="form-control">
+                                                                                <input type="text" id="consignee_tel" name="consignee_tel"  class="form-control">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="consignee_email">Consignee Email</label>
-                                                                                <input type="text" id="consignee_email" name="consignee_email" value="" required class="form-control">
+                                                                                <input type="text" id="consignee_email" name="consignee_email" class="form-control">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="consignee_address">Consignee Address</label>
@@ -461,13 +461,13 @@
                                                     </tbody>
                                                 </table>
                                         </div>
-                                        <div class="tab-pane p-20" id="messages" role="tabpanel">
+                                        <div class="tab-pane p-20" id="messages" role="tabpanel" style="display: none">
                                             <h3 class="text-center">Voyage Details</h3>
                                             @if($quotation->voyage == null)
                                                 <form class="m-t-40" onsubmit="event.preventDefault();submitForm(this, '/voyage-details','redirect');" action="" id="voyage">
                                                     <div class="row">
                                                         <div class="col-sm-6">
-                                                            <div class="form-group">
+                                                            <div class="form-group" style="display: none">
                                                                 <input type="hidden" name="quotation_id" value="{{ $quotation->id }}">
                                                                 <label for="name">Voyage Name</label>
                                                                 <input type="text" required value="{{\Esl\Repository\ProjectRepo::init()->generateName(str_replace('MV',"",$quotation->vessel->name),$quotation->vessel->imo_number)->getName()}}" id="name" name="name" class="form-control" placeholder="Name">

@@ -41,6 +41,7 @@ class CreateCargosTable extends Migration
             $table->text('shipping_line')->nullable();
             $table->text('notifying_address')->nullable();
             $table->text('remarks')->nullable();
+            $table->string('edo')->default(0);
             $table->timestamps();
         });
     }

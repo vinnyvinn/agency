@@ -17,9 +17,9 @@ class CreateConsigneesTable extends Migration
             $table->increments('id');
             $table->integer('quotation_id')->nullable();
             $table->integer('cargo_id');
-            $table->string('consignee_name');
-            $table->string('consignee_email');
-            $table->string('consignee_tel');
+            $table->string('consignee_name')->nullable();
+            $table->string('consignee_email')->nullable();
+            $table->string('consignee_tel')->nullable();
             $table->text('consignee_address');
             $table->timestamps();
         });

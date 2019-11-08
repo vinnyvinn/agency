@@ -23,6 +23,9 @@ class CreatePettyCashesTable extends Migration
             $table->date('deadline');
             $table->text('reason');
             $table->string('file_path')->nullable();
+            $table->string('payment_type')->nullable();
+            $table->string('payment_mode')->default(1);
+            $table->string('currency_type')->nullable();
             $table->timestamps();
         });
     }

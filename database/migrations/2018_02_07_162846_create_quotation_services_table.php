@@ -30,6 +30,7 @@ class CreateQuotationServicesTable extends Migration
             $table->string('units');
             $table->string('tax');
             $table->string('total');
+            $table->string('buying_price')->nullable()->default(0);
             $table->timestamps();
         });
     }
