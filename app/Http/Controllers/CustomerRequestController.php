@@ -27,4 +27,9 @@ class CustomerRequestController extends Controller
                 ->withType($request->type);
         }
     }
+
+    public function storeTemplate(){
+        return response()->json(request()->all());
+    }
+
 }

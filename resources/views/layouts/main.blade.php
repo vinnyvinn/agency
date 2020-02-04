@@ -33,7 +33,10 @@
             mso-footer-margin:.5in;
             mso-paper-source:0;
         }
-
+       .f_r{
+        color: red;
+        font-size:24px
+       }
 
 
         div.Section1 {

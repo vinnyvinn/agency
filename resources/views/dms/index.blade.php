@@ -50,7 +50,7 @@
                                             {{--<td>{{ $dm->bl_number }}</td>--}}
                                             <td>{{ ucwords($dm->customer->Name) }}</td>
                                             <td>{{ strtoupper($dm->vessel->name) }}</td>
-                                            <td>{{ strtoupper($dm->quote->voyage->voyage_no) }}</td>
+                                            <td>{{ strtoupper($dm->quote->voyage ? $dm->quote->voyage->voyage_no : '') }}</td>
 {{--                                            <td>{{ ucwords($dm->vessel->port_of_discharge ) }}, {{ ucwords($dm->vessel->country_of_discharge ) }}</td>--}}
 {{--                                            <td>{{ ucwords($dm->vessel->port_of_loading ) }}, {{ ucwords($dm->vessel->country_of_loading ) }}</td>--}}
 {{--                                            <td>{{ $dm->quote == null ? 0 : $dm->quote->cargos->sum('weight')}}</td>--}}
@@ -101,7 +101,7 @@
                                             {{--<td>{{ $dm->bl_number }}</td>--}}
                                             <td>{{ ucwords($dm->customer->Name) }}</td>
                                             <td>{{ strtoupper($dm->vessel->name) }}</td>
-                                            <td>{{ $dm->quote ? strtoupper($dm->quote->voyage->voyage_no) : '' }}</td>
+                                            <td>{{ $dm->quote->voyage ? strtoupper($dm->quote->voyage->voyage_no) : '' }}</td>
 {{--                                            <td>{{ ucwords($dm->vessel->port_of_discharge ) }}, {{ ucwords($dm->vessel->country_of_discharge ) }}</td>--}}
 {{--                                            <td>{{ ucwords($dm->vessel->port_of_loading ) }}, {{ ucwords($dm->vessel->country_of_loading ) }}</td>--}}
 {{--                                            <td>{{ $dm->quote->cargos->sum('weight')}}</td>--}}

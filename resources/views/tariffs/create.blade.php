@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="unit_value">Tariff Unit Value</label>
-                                        <input type="number" min="1" required id="unit_value" name="unit_value" class="form-control" placeholder="Tariff Unit Value">
+                                        <input type="number" min="1" required id="unit_value" name="unit_value" class="form-control unit_value" placeholder="Tariff Unit Value">
                                         {{--<span class="help-block text-muted">--}}
                                         {{--<small>A block of help text that breaks onto a new line and may extend beyond one line.</small>--}}
                                         {{--</span>--}}
@@ -88,4 +88,21 @@
         </div>
     </div>
 @endsection
+@section('scripts')
+<script>
+    $(function(){
+          $('.unit_value').on('keyup',function(){        
+               if($(this).val() < 1){            
+               $(this).val(1);            
+               }
+            })
 
+            $('.unit_value').on('click',function(){          
+               if($(this).val() < 1){          
+               $(this).val(1);          
+               }
+            })
+    })
+</script>
+
+@endsection

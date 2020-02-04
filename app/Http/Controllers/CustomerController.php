@@ -242,7 +242,7 @@ class CustomerController extends Controller
             ]);
 
             NotificationRepo::create()->success('Quotation generated successfully');
-
+            
             return Response(['success' => ['redirect' => url('/quotation/'.$quote->id)]]);
         }
     }
@@ -298,11 +298,11 @@ class CustomerController extends Controller
 
         $data['eta'] = Carbon::parse($request->eta);
         $data['vessel_arrived'] = Carbon::parse($request->vessel_arrived);
-        Voyage::create($data);
+        $voyage = Voyage::create($data);
 
         NotificationRepo::create()->success('Voyage details added successfully');
-
-        return Response(['success' => ['redirect' => url('/quotation/'.$request->quotation_id)]]);
+         $dms = Voyage::find($voyage->id)->quotation->dms;
+        return Response(['success' => ['redirect' => url('/dms/edit/'.$dms->id)]]);
     }
 
     public function updateCargoDetails(Request $request)

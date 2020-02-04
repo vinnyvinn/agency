@@ -275,11 +275,11 @@ class QuotationController extends Controller
         ])->findOrFail($id);
 
         if ($quotation->service_type_id == null) {
-            if ($quotation->voyage == null) {
-                NotificationRepo::create()->error('No Voyage details added');
-                return redirect()->back();
-            }
-
+            // if ($quotation->voyage == null) {
+            //     NotificationRepo::create()->error('No Voyage details added');
+            //     return redirect()->back();
+            // }
+            
             if (count($quotation->services) < 1) {
                 NotificationRepo::create()->error('No Services added');
                 return redirect()->back();

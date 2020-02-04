@@ -76,21 +76,21 @@
                                                     <div class="row">
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
-                                                                <label for="name">Vessel Name</label>
+                                                                <label for="name">Vessel Name <span class="f_r">*</span></label>
                                                                 <input type="text" required id="name" name="name" class="form-control text-uppercase" placeholder="Name">
                                                             </div>
                                                             <input type="hidden" name="lead_id" value="{{ $customer->id }}">
                                                             <div class="form-group">
-                                                                <label for="call_sign">Call Sign</label>
+                                                                <label for="call_sign">Call Sign <span class="f_r">*</span></label>
                                                                 <input type="text" required id="call_sign" name="call_sign" class="form-control" placeholder="Call Sign">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="imo_number">IMO Number </label>
-                                                                <input type="text" required id="imo_number" name="imo_number" class="form-control" placeholder="IMO Number">
+                                                                <input type="text" id="imo_number" name="imo_number" class="form-control" placeholder="IMO Number">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="country">Country (Vessel Flag) </label>
-                                                                <select name="country" required id="country"
+                                                                <select name="country" id="country"
                                                                         class="select2 form-control">
                                                                     <option value="">Select Country</option>
                                                                     @foreach(\Esl\helpers\Constants::COUNTRY_LIST as $value)
@@ -103,7 +103,7 @@
                                                                 {{--<input type="text" id="eta" required  name="eta" class="datepicker form-control" placeholder="ETA">--}}
                                                             {{--</div>--}}
                                                             <div class="form-group">
-                                                                <label for="country_of_discharge"> Country of Discharge</label>
+                                                                <label for="country_of_discharge"> Country of Discharge <span class="f_r">*</span></label>
                                                                 <select name="country_of_discharge" required id="country_of_discharge"
                                                                         class="select2 form-control">
                                                                     <option value="">Select Country</option>
@@ -113,15 +113,15 @@
                                                                 </select>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="port_of_discharge"> Port of Discharge</label>
+                                                                <label for="port_of_discharge"> Port of Discharge <span class="f_r">*</span></label>
                                                                 <input type="text"  id="port_of_discharge" required  name="port_of_discharge" class="form-control" placeholder="Port of Discharge">
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="port_of_discharge_code"> Port of Discharge Code</label>
+                                                                <label for="port_of_discharge_code"> Port of Discharge Code <span class="f_r">*</span></label>
                                                                 <input type="text" id="port_of_discharge_code" required  name="port_of_discharge_code" class="form-control" placeholder="Port of Discharge Code">
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="loading_type"> Vessel Operation</label>
+                                                                <label for="loading_type"> Vessel Operation <span class="f_r">*</span></label>
                                                                 <select name="loading_type" required id="loading_type"
                                                                         class="form-control">
                                                                     <option value="">Select</option>
@@ -133,7 +133,7 @@
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
                                                                 <label for="country_of_loading"> Country of Loading</label>
-                                                                <select required name="country_of_loading" id="country_of_loading"
+                                                                <select name="country_of_loading" id="country_of_loading"
                                                                         class="select2 form-control">
                                                                     <option value="">Select Country</option>
                                                                     <option value="TBA">TBA</option>
@@ -144,30 +144,30 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="port_of_loading"> Port of Loading</label>
-                                                                <input type="text" id="port_of_loading" required  name="port_of_loading" class="form-control" placeholder="Port of Loading">
+                                                                <input type="text" id="port_of_loading"  name="port_of_loading" class="form-control" placeholder="Port of Loading">
                                                             </div>
 
 
                                                             <div class="form-group">
                                                                 <label for="port_of_loading_code"> Port of Loading Code</label>
-                                                                <input type="text" id="port_of_loading_code" required  name="port_of_loading_code" class="form-control" placeholder="Port of Loading Code">
+                                                                <input type="text" id="port_of_loading_code" name="port_of_loading_code" class="form-control" placeholder="Port of Loading Code">
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="loa">Length Over All </label>
-                                                                <input type="number" id="loa" name="loa" required class="form-control" placeholder="Length Over All">
+                                                                <label for="loa">Length Over All <span class="f_r">*</span> </label>
+                                                                <input type="number" id="loa" name="loa" required class="form-control loa" placeholder="Length Over All">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="grt">Gross Tonnage  GRT</label>
-                                                                <input type="number" id="grt" name="grt" required class="form-control" placeholder="Gross Tonnage ">
+                                                                <label for="grt">Gross Tonnage  GRT <span class="f_r">*</span></label>
+                                                                <input type="number" id="grt" name="grt" required class="form-control grt" placeholder="Gross Tonnage ">
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="nrt"> Net Tonnage</label>
-                                                                <input type="number" required id="nrt" name="nrt"  class="form-control" placeholder="Net Tonnage">
+                                                                <label for="nrt"> Net Tonnage <span class="f_r">*</span></label>
+                                                                <input type="number" required id="nrt" name="nrt"  class="form-control nrt" placeholder="Net Tonnage">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="dwt"> Dead Weight - including provision</label>
-                                                                <input type="number" required id="dwt" name="dwt"  class="form-control" placeholder="Dead Weight - including provision">
+                                                                <input type="number" id="dwt" name="dwt"  class="form-control dwt" placeholder="Dead Weight - including provision">
                                                             </div>
                                                             <div class="form-group">
                                                                 <br>
@@ -189,5 +189,55 @@
     </div>
 @endsection
 @section('scripts')
+<script>    
+$(function(){
+    $('.nrt').on('keyup',function(){        
+               if($(this).val() < 1){            
+               $(this).val(1);            
+               }
+            })
 
+            $('.nrt').on('click',function(){          
+               if($(this).val() < 1){          
+               $(this).val(1);          
+               }
+            })
+
+              $('.grt').on('keyup',function(){        
+               if($(this).val() < 1){            
+               $(this).val(1);            
+               }
+            })
+
+            $('.grt').on('click',function(){          
+               if($(this).val() < 1){          
+               $(this).val(1);          
+               }
+            })
+
+              $('.dwt').on('keyup',function(){        
+               if($(this).val() < 1){            
+               $(this).val(1);            
+               }
+            })
+
+            $('.dwt').on('click',function(){          
+               if($(this).val() < 1){          
+               $(this).val(1);          
+               }
+            })
+
+            $('.loa').on('keyup',function(){        
+               if($(this).val() < 1){            
+               $(this).val(1);            
+               }
+            })
+
+            $('.loa').on('click',function(){          
+               if($(this).val() < 1){          
+               $(this).val(1);          
+               }
+            })
+})
+</script>
 @endsection

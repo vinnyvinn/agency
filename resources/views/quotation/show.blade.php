@@ -31,7 +31,7 @@
                                     <ul class="nav nav-tabs" role="tablist">
                                         <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Vessel Details</span></a> </li>
                                         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Cargo / Consignee Details</span></a> </li>
-                                        <li style="display: none" class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Voyage Details</span></a> </li>
+                                        <li style="display: none;" class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Voyage Details</span></a> </li>
                                     </ul>
                                     <div class="tab-content tabcontent-border">
                                         <div class="tab-pane active" id="home" role="tabpanel">
@@ -242,11 +242,11 @@
                                                                         <div class="col-sm-6">
                                                                             <div class="form-group">
                                                                                 <label for="discharge_rate">Cargo Quantity (MT)</label>
-                                                                                <input type="number" id="weight" name="weight" value="" required class="form-control" placeholder="Cargo Quantity (MT)">
+                                                                                <input type="number" id="weight" name="weight" value="" required class="form-control weight" placeholder="Cargo Quantity (MT)">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="discharge_rate">Discharge Rate</label>
-                                                                                <input type="number" id="discharge_rate" name="discharge_rate" value="" required class="form-control" placeholder="Discharge Rate">
+                                                                                <input type="number" id="discharge_rate" name="discharge_rate" value="" required class="form-control discharge_rate" placeholder="Discharge Rate">
                                                                             </div>
 
                                                                             <div class="form-group">
@@ -259,7 +259,7 @@
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="consignee_name">Consignee Name</label>
-                                                                                <input type="text" id="consignee_name" name="consignee_name"  class="form-control">
+                                                                                <input type="text" id="consignee_name" name="consignee_name"  class="form-control" required>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="consignee_tel">Consignee Telephone</label>
@@ -461,7 +461,7 @@
                                                     </tbody>
                                                 </table>
                                         </div>
-                                        <div class="tab-pane p-20" id="messages" role="tabpanel" style="display: none">
+                                        <div class="tab-pane p-20" id="messages" role="tabpanel">
                                             <h3 class="text-center">Voyage Details</h3>
                                             @if($quotation->voyage == null)
                                                 <form class="m-t-40" onsubmit="event.preventDefault();submitForm(this, '/voyage-details','redirect');" action="" id="voyage">
@@ -559,12 +559,12 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <input type="number" required id="service_units" name="service_units" placeholder="Units" class="form-control">
+                                                <input type="number" required id="service_units" name="service_units" placeholder="Units" class="form-control service_units">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <input type="number" required id="agency_sp" name="agency_sp" placeholder="Selling Price" class="form-control">
+                                                <input type="number" required id="agency_sp" name="agency_sp" placeholder="Selling Price" class="form-control agency_sp">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
@@ -967,6 +967,57 @@
         });
 
         $(document).ready(function() {
+            $('.service_units').on('keyup',function(){        
+               if($(this).val() < 1){            
+               $(this).val(1);            
+               }
+            })
+
+            $('.service_units').on('click',function(){          
+               if($(this).val() < 1){          
+               $(this).val(1);          
+               }
+            })
+
+             $('.agency_sp').on('keyup',function(){        
+               if($(this).val() < 1){            
+               $(this).val(1);            
+               }
+            })
+
+            $('.agency_sp').on('click',function(){          
+               if($(this).val() < 1){          
+               $(this).val(1);          
+               }
+            })
+
+
+             $('.discharge_rate').on('keyup',function(){        
+               if($(this).val() < 1){            
+               $(this).val(1);            
+               }
+            })
+
+            $('.discharge_rate').on('click',function(){          
+               if($(this).val() < 1){          
+               $(this).val(1);          
+               }
+            })
+
+            $('.weight').on('keyup',function(){        
+               if($(this).val() < 1){            
+               $(this).val(1);            
+               }
+            })
+
+            $('.weight').on('click',function(){          
+               if($(this).val() < 1){          
+               $(this).val(1);          
+               }
+            })
+        
+        //discharge_rate
+        //agency_sp
             if ($("#mymce").length > 0) {
                 tinymce.init({
                     selector: "textarea#mymce",

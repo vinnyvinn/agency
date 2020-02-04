@@ -49,14 +49,14 @@
                                                             <label for="berth_number">Berth Number</label>
                                                             <input type="text" required id="berth_number" name="berth_number" class="form-control">
                                                         </div>
-                                                        @if($dms->quote)
+                                                       {{--  @if($dms->quote) --}}
                                                         @foreach($dms->quote->cargos as $cargo)
                                                             <div class="form-group">
                                                                 <label for="cargo_bl">Update ({{$cargo->name}}) Cargo For {{ucwords($cargo->consignee->consignee_name)}} BL Number</label>
                                                                 <input type="text" required id="cargo_bl" name="cargo_bl[{{$cargo->id}}]" class="form-control">
                                                             </div>
                                                         @endforeach
-                                                        @endif
+                                                       {{--  @endif --}}
                                                         <div class="form-group">
                                                             <label for="eta">Update ETA Date</label>
                                                             <input type="text" required id="eta" name="eta" class="datepicker form-control">
@@ -104,22 +104,22 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-3">
                                                                             <div class="form-group"><label for="days">Number of Days</label>
-                                                                                <input required  type="number" name="days" id="days" class="form-control">
+                                                                                <input required  type="number" name="days" id="days" class="form-control days">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-3">
                                                                             <div class="form-group"><label for="days">Number of Hours</label>
-                                                                                <input required  type="number" name="hour" id="hour" class="form-control">
+                                                                                <input required  type="number" name="hour" id="hour" class="form-control hours">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-3">
                                                                             <div class="form-group"><label for="hours">Number of Mins</label>
-                                                                                <input required  type="number" name="min" id="min" class="form-control">
+                                                                                <input required  type="number" name="min" id="min" class="form-control mins">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-3">
                                                                             <div class="form-group"><label for="hours">Number of Secs</label>
-                                                                                <input required  type="number" name="sec" id="sec" class="form-control">
+                                                                                <input required  type="number" name="sec" id="sec" class="form-control secs">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -128,7 +128,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="number_of_crane">Total Number of Cranes </label>
-                                                            <input type="number" required id="number_of_crane" name="number_of_crane" class="form-control" placeholder="Total Number of Cranes">
+                                                            <input type="number" required id="number_of_crane" name="number_of_crane" class="form-control cranes" placeholder="Total Number of Cranes">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="">**Note you can still make Changes later</label>
@@ -181,9 +181,11 @@
                                                 <div class="col-sm-12">
                                                     <h4>Client Files</h4>
                                                     <div class="col-sm-12">
+                                                        @if($dms->vessel)
                                                         @foreach($dms->vessel->vDocs as $doc)
                                                             {{ $loop->iteration }} . <a href="{{ url($doc->doc_path) }}" target="_blank" >{{ $doc->name }}</a>
                                                         @endforeach
+                                                        @endif
                                                     </div>
                                                     <br>
                                                 </div>
@@ -361,26 +363,79 @@
                                                 @endif
                                         </div>
                                         <div class="tab-pane p-20" id="messages" role="tabpanel">
+                                              @if($dms->quote->voyage == null)
+                                                <form class="m-t-40" onsubmit="event.preventDefault();submitForm(this, '/voyage-details','redirect');" action="" id="voyage">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group" style="display: none">
+                                                                <input type="hidden" name="quotation_id" value="{{ $dms->quote->id }}">
+                                                                <label for="name">Voyage Name</label>
+                                                                <input type="text" required value="{{\Esl\Repository\ProjectRepo::init()->generateName(str_replace('MV',"",$dms->quote->vessel->name),$dms->quote->vessel->imo_number)->getName()}}" id="name" name="name" class="form-control" placeholder="Name">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="voyage_no">External Voyage Number</label>
+                                                                <input type="text" required value="{{\Esl\Repository\ProjectRepo::init()->generateName(str_replace('MV',"",$dms->quote->vessel->name),$dms->quote->vessel->imo_number)->getName()}}"  id="voyage_no" name="voyage_no" class="form-control" placeholder="Voyage Number">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="internal_voyage_no">Internal Voyage No</label>
+                                                                <input type="text"  id="internal_voyage_no" name="internal_voyage_no" value="{{\Esl\Repository\ProjectRepo::init()->generateName(str_replace('MV',"",$dms->quote->vessel->name),$dms->quote->vessel->imo_number)->getName()}}" class="form-control" placeholder="Internal Voyage No">
+                                                            </div>
+                                                            {{--<div class="form-group">--}}
+                                                                {{--<label for="service_code">Service Code</label>--}}
+                                                                <input type="hidden"  id="service_code" value="CODE" name="service_code" class="form-control" placeholder="Service Code">
+                                                            {{--</div>--}}
+                                                            <div class="form-group">
+                                                                <label for="final_destination">Final Destination </label>
+                                                                <input type="text" required id="final_destination" name="final_destination" class="form-control" placeholder="Final Destination">
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="eta"> ETA (Date)</label>
+                                                                <input type="text" required id="eta"  name="eta" class="form-control datepicker">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="eta_time"> ETA (Time)</label>
+                                                                <input type="text" required id="eta_time"  name="eta_time" class="form-control timepicker1">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="vessel_arrived"> ATA (Date)</label>
+                                                                <input type="text" required id="vessel_arrived"  name="vessel_arrived" class="form-control datepicker">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="vessel_arrived_time"> ATA (Time)</label>
+                                                                <input type="text" required id="vessel_arrived_time"  name="vessel_arrived_time" class="form-control timepicker1">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <br>
+                                                                <input class="btn pull-right btn-primary" type="submit" value="Save">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            @else
                                             <div class="row">
                                                     <table class="table table-stripped">
                                                         <tbody>
                                                         <tr>
-                                                            <td><strong>Name : </strong>{{ $dms->quote ? ucwords($dms->quote->voyage->name) :''}}</td>
-                                                            <td><strong>External Voyage NO : </strong> {{ $dms->quote ? strtoupper($dms->quote->voyage->voyage_no) :''}}</td>
-                                                            <td><strong>Internal Voyage Code : </strong> {{ $dms->quote ? strtoupper($dms->quote->voyage->internal_voyage_no) :'' }}</td>
+                                                            <td><strong>Name : </strong>{{ $dms->quote->voyage ? ucwords($dms->quote->voyage->name) :''}}</td>
+                                                            <td><strong>External Voyage NO : </strong> {{ $dms->quote->voyage ? strtoupper($dms->quote->voyage->voyage_no) :''}}</td>
+                                                            <td><strong>Internal Voyage Code : </strong> {{ $dms->quote->voyage ? strtoupper($dms->quote->voyage->internal_voyage_no) :'' }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>Final Destination : </strong>{{ $dms->quote ? ucwords($dms->quote->voyage->final_destination ) : ''}}</td>
-                                                            <td><strong>ETA : </strong> {{$dms->quote ?  \Carbon\Carbon::parse($dms->quote->voyage->eta)->format('d-M-y') : ''}}</td>
-                                                            <td><strong>Vessel Arrived : </strong> {{ $dms->quote ? \Carbon\Carbon::parse($dms->quote->voyage->vessel_arrived)->format('d-M-y') : ''}}</td>
+                                                            <td><strong>Final Destination : </strong>{{ $dms->quote->voyage ? ucwords($dms->quote->voyage->final_destination ) : ''}}</td>
+                                                            <td><strong>ETA : </strong> {{$dms->quote->voyage ?  \Carbon\Carbon::parse($dms->quote->voyage->eta)->format('d-M-y') : ''}}</td>
+                                                            <td><strong>Vessel Arrived : </strong> {{ $dms->quote->voyage ? \Carbon\Carbon::parse($dms->quote->voyage->vessel_arrived)->format('d-M-y') : ''}}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>Service Code : </strong> {{ $dms->quote ? strtoupper($dms->quote->voyage->service_code) : ''}}</td>
+                                                            <td><strong>Service Code : </strong> {{ $dms->quote->voyage ? strtoupper($dms->quote->voyage->service_code) : ''}}</td>
                                                         </tr>
 
                                                         </tbody>
                                                     </table>
                                                 </div>
+                                                @endif
                                         </div>
                                         <div class="tab-pane p-20" id="agency" role="tabpanel">
                                             <h3 class="text-center">Generate Files</h3>
@@ -402,10 +457,10 @@
                                                                             <div class="form-group">
                                                                                 <input type="hidden" name="bl_id" id="bl_id" value="{{$dms->id}}">
                                                                                 <input type="hidden" name="vessel_name" id="vessel_name" value="{{$dms->vessel->name}}">
-                                                                                <input type="hidden" name="voyage" id="voyage" value="{{$dms->quote ? $dms->quote->voyage->name : ''}}">
+                                                                                <input type="hidden" name="voyage" id="voyage" value="{{$dms->quote->voyage ? $dms->quote->voyage->name : ''}}">
                                                                                 <input type="hidden" name="port_of_loading" id="port_of_loading" value="{{$dms->vessel->port_of_loading}}">
                                                                                 <input type="hidden" name="country" id="country" value="{{$dms->vessel->country_of_loading}}">
-                                                                                <input type="hidden" name="eta" id="eta" value="{{$dms->quote ? $dms->quote->voyage->eta : ''}}">
+                                                                                <input type="hidden" name="eta" id="eta" value="{{$dms->quote->voyage ? $dms->quote->voyage->eta : ''}}">
                                                                                 <label for="client">Delivery To</label>
                                                                                 <input type="text" name="client" class="form-control" value="" required>
                                                                             </div>
@@ -476,13 +531,13 @@
                                                                             {{ csrf_field() }}
                                                                                 <input type="hidden" name="bl_id" id="bl_id" value="{{$dms->id}}">
                                                                                 <input type="hidden" name="vessel_name" id="vessel_name" value="{{$dms->vessel->name}}">
-                                                                                <input type="hidden" name="voyage" id="voyage" value="{{$dms->quote ? $dms->quote->voyage->name :''}}">
-                                                                                <input type="hidden" name="voyage_nationality" id="voyage_nationality" value="{{$dms->quote ? $dms->quote->voyage->country :''}}">
+                                                                                <input type="hidden" name="voyage" id="voyage" value="{{$dms->quote->voyage ? $dms->quote->voyage->name :''}}">
+                                                                                <input type="hidden" name="voyage_nationality" id="voyage_nationality" value="{{$dms->quote->voyage ? $dms->quote->voyage->country :''}}">
                                                                                 <input type="hidden" name="port_of_loading" id="port_of_loading" value="{{$dms->vessel->port_of_loading}}">
                                                                                 <input type="hidden" name="port_of_discharge" id="port_of_discharge" value="{{$dms->vessel->port_of_discharge}}">
                                                                                 <input type="hidden" name="country" id="country" value="{{$dms->vessel->country_of_loading}}">
                                                                                 <input type="hidden" name="country_discharge" id="country_discharge" value="{{$dms->vessel->country_of_discharge}}">
-                                                                                <input type="hidden" name="eta" id="eta" value="{{$dms->quote ? $dms->quote->voyage->eta :''}}">
+                                                                                <input type="hidden" name="eta" id="eta" value="{{$dms->quote->voyage ? $dms->quote->voyage->eta :''}}">
 
                                                                             @if($dms->id == null)
                                                                                     @if(array_key_exists('incargoid',json_decode($dms->inWard->data, true)))
@@ -703,13 +758,13 @@
                                                                                 <input type="hidden" name="bl_id" id="bl_id" value="{{$dms->id}}">
                                                                                 <input type="hidden" name="outward" id="outward" value="{{$dms->id}}">
                                                                                 <input type="hidden" name="vessel_name" id="vessel_name" value="{{$dms->vessel->name}}">
-                                                                                <input type="hidden" name="voyage" id="voyage" value="{{$dms->quote ? $dms->quote->voyage->name :''}}">
-                                                                                <input type="hidden" name="voyage_nationality" id="voyage_nationality" value="{{$dms->quote ? $dms->quote->voyage->country : ''}}">
+                                                                                <input type="hidden" name="voyage" id="voyage" value="{{$dms->quote->voyage ? $dms->quote->voyage->name :''}}">
+                                                                                <input type="hidden" name="voyage_nationality" id="voyage_nationality" value="{{$dms->quote->voyage ? $dms->quote->voyage->country : ''}}">
                                                                                 <input type="hidden" name="port_of_loading" id="port_of_loading" value="{{$dms->vessel->port_of_loading}}">
                                                                                 <input type="hidden" name="port_of_discharge" id="port_of_discharge" value="{{$dms->vessel->port_of_discharge}}">
                                                                                 <input type="hidden" name="country" id="country" value="{{$dms->vessel->country_of_loading}}">
                                                                                 <input type="hidden" name="country_discharge" id="country_discharge" value="{{$dms->vessel->country_of_discharge}}">
-                                                                                <input type="hidden" name="eta" id="eta" value="{{$dms->quote ? $dms->quote->voyage->eta :''}}">
+                                                                                <input type="hidden" name="eta" id="eta" value="{{$dms->quote->voyage ? $dms->quote->voyage->eta :''}}">
 
                                                                             @if($dms->id == null)
                                                                                     @if(array_key_exists('incargoid',json_decode($dms->inWard->data, true)))
@@ -1935,11 +1990,11 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="ata">Update ATA Date</label>
-                                                <input type="text" value="{{$dms->quote ? $dms->quote->voyage->vessel_arrived : ''}}"  required id="ata" name="ata" class="datepicker form-control">
+                                                <input type="text" value="{{$dms->quote->voyage ? $dms->quote->voyage->vessel_arrived : ''}}"  required id="ata" name="ata" class="datepicker form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label for="ata_time">Update ATA Time</label>
-                                                <input type="text" required value="{{ $dms->quote ? $dms->quote->voyage->vessel_arrived : ''}}"  id="ata_time" name="ata_time" class="timepicker1 form-control">
+                                                <input type="text" required value="{{ $dms->quote->voyage ? $dms->quote->voyage->vessel_arrived : ''}}"  id="ata_time" name="ata_time" class="timepicker1 form-control">
                                             </div>
                                             <div class="form-group">
                                                 <label for="date_of_loading">NOR Date</label>
@@ -2005,6 +2060,70 @@
 @endsection
 @section('scripts')
     <script>
+
+        $(function(){
+         $('.hours').on('keyup',function(){        
+           if($(this).val() < 1){            
+           $(this).val(1);            
+           }
+        })
+
+        $('.hours').on('click',function(){          
+           if($(this).val() < 1){          
+           $(this).val(1);          
+           }
+        })
+
+         $('.mins').on('keyup',function(){        
+           if($(this).val() < 1){            
+           $(this).val(1);            
+           }
+        })
+
+        $('.mins').on('click',function(){          
+           if($(this).val() < 1){          
+           $(this).val(1);          
+           }
+        })
+
+         $('.secs').on('keyup',function(){        
+           if($(this).val() < 1){            
+           $(this).val(1);            
+           }
+        })
+
+        $('.secs').on('click',function(){          
+           if($(this).val() < 1){          
+           $(this).val(1);          
+           }
+        })
+
+         $('.cranes').on('keyup',function(){        
+           if($(this).val() < 1){            
+           $(this).val(1);            
+           }
+        })
+
+        $('.cranes').on('click',function(){          
+           if($(this).val() < 1){          
+           $(this).val(1);          
+           }
+        })
+
+         $('.days').on('keyup',function(){        
+           if($(this).val() < 1){            
+           $(this).val(1);            
+           }
+        })
+
+        $('.days').on('click',function(){          
+           if($(this).val() < 1){          
+           $(this).val(1);          
+           }
+        })
+
+        })
+
         $('.timepicker1').timepicker({'showMeridian':false});
         function alertTransport() {
             alert('Email with required documents sent to Transport');

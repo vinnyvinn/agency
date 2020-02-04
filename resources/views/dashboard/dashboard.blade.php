@@ -26,6 +26,51 @@
                             <div class="row">
                                 <h4>Generate Quotation</h4>
                                 <a href="{{ url('/leads') }}" class="btn btn-primary">Quotation</a>
+                                  <div class="tab-pane  p-20" id="profile" role="tabpanel" style="display: none;">
+                                            {{--@if(count($quotation->cargos) < 1)--}}
+                                            <button class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lgcargo">Quotation</button>
+                                            {{--@endif--}}
+                                                <div class="modal fade bs-example-modal-lgcargo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="myLargeModalLabel">Generate Quotation</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="col-12">
+                                                                <form class="m-t-40" method="post" id="cargo">
+                                                                   <div class="form-group">
+                                                                        <input type="checkbox" name="temp" class="check template" id="t1" value="save">
+                                                             <label for="t1">Save to a template</label>
+                                                                   </div>
+                                                                   <div class="form-group template_name">
+                                                                       <label>Template Name</label>
+                                                                       <input type="text" class="form-control" name="template_name" placeholder="Enter Template Name">
+                                                                   </div>
+                                                                    <div class="form-group">
+                                                                        <input type="checkbox" name="temp" class="check template" id="t2" value="select">
+                                                                <label for="t2">Choose from a template</label>
+                                                                   </div>
+                                                                   <div class="form-group list_templates">
+                                                                    <label>Choose Template</label>
+                                                                       <select name="list_templates" name="list_templates" class="form-control" id="list_templates">
+                                                                           <option value="1">ewrewrer</option>
+                                                                       </select>
+                                                                   </div>
+                                                                     <div class="modal-footer">
+                                                                                <button type="submit" class="btn btn-primary waves-effect text-left">Proceed</button>
+                                                                                <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
+                                                                            </div>
+                                                                  </form>
+                                                                          </div>
+                                                                            </div>
+                                                                          
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                          
+                                        </div>
                             </div>
                         </div>
                     </div>
@@ -142,4 +187,45 @@
                 </div>
             @endcan
     </div>
+@endsection
+
+@section('scripts')
+
+<script>
+    $(function(){
+         $('.template_name').hide();
+         $('.list_templates').hide();
+        $('.template').on('change',function(){
+            //console.log($(this). prop("checked"))
+            if ($(this).prop("checked") && $(this).val() =='save') {
+            $('.template_name').show()
+            $('.list_templates').hide()
+            }
+            else if ($(this).prop("checked") && $(this).val() =='select') {
+             $('.list_templates').show()
+             $('.template_name').hide()
+            }
+            
+            else{
+             $('.list_templates').hide()
+             $('.template_name').hide()
+            }
+           
+        })
+    })
+
+    $('#cargo').on('submit',function(e){
+        e.preventDefault();
+        $.ajax({
+            url:'save-template',
+            method:'GET',
+            type:'JSON',
+            data:{data:$('#cargo').serialize()},
+            success:function(res){
+                console.log(res);
+            }
+        })
+    })
+</script>
+
 @endsection

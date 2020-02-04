@@ -31,7 +31,7 @@ class CreateVesselsTable extends Migration
             $table->string('country_of_loading')->nullable();
             $table->string('port_of_loading')->nullable();
             $table->boolean('loading_type')->nullable()->default(0); //isinward
-            $table->string('port_of_loading_code')->default('n/a');
+            $table->string('port_of_loading_code')->default('n/a')->nullable();
             $table->string('port_of_discharge_code')->default('n/a');
             $table->timestamps();
         });

@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class BillOfLanding extends ESLModel
 {
+ public function getDates()
+{
+    return [];
+}
 //    protected $dateFormat = 'Y-m-d H:i:s';
     protected  $fillable = ['vessel_id','time_allowed','service_type_id','code_name','voyage_id',
         'quote_id',

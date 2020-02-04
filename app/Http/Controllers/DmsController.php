@@ -37,7 +37,7 @@ class DmsController extends Controller
     {
         $bl = BillOfLanding::with(['vessel','quote.services','quote.cargos','customer'])
             ->get();
-
+          // dd(\Carbon\Carbon::createFromFormat('H:i:s','17:45')->format('h:i'));
         return view('dms.index')
             ->withDms($bl);
     }
@@ -287,9 +287,13 @@ class DmsController extends Controller
 
 
         $dateTime = \DateTime::createFromFormat('d/m/Y', $request->eta);
-          Voyage::findOrFail($dms->quote->voyage->id)->update(['eta'=>$dateTime,
-            'vessel_arrived'=>$request->ata]);
 
+        if ($dms->quote->voyage) {
+           Voyage::findOrFail($dms->quote->voyage->id)->update(['eta'=>$dateTime,
+            'vessel_arrived'=>$request->ata]);
+        }
+        
+  
         Vessel::findOrFail($dms->vessel->id)->update(['eta'=>$dateTime  ]);
         foreach ($data['cargo_bl'] as $key => $datum){
             Cargo::findOrFail($key)->update(['bl_no'=>$datum]);
@@ -360,7 +364,7 @@ class DmsController extends Controller
                 'bl' => $bl_nos,
                 'supplier' => $dms->quote->cargos->first()->shipper,
                 'consignee' => $consignees,
-                'arrive' => Carbon::parse($dms->quote->voyage->vessel_arrived)->format('d-M-y'),
+                'arrive' => $dms->quote->voyage ? Carbon::parse($dms->quote->voyage->vessel_arrived)->format('d-M-y') : '',
                 'weight' => $dms->quote->cargos->sum('weight'),
                 'disch' => $dms->quote->cargos->first()->discharge_rate,
                 'rate' => $dms->quote->cargos->first()->discharge_rate,
@@ -439,7 +443,7 @@ class DmsController extends Controller
                     'bl' => $bl_nos,
                     'supplier' => $dms->quote->cargos->first()->shipper,
                     'consignee' => $consignees,
-                    'arrive' => Carbon::parse($dms->quote->voyage->vessel_arrived)->format('d-M-y'),
+                    'arrive' => $dms->quote->voyage ? Carbon::parse($dms->quote->voyage->vessel_arrived)->format('d-M-y') : '',
                     'weight' => $dms->quote->cargos->sum('weight'),
                     'disch' => $dms->quote->cargos->first()->discharge_rate,
                     'rate' => $dms->quote->cargos->first()->discharge_rate,

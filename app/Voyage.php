@@ -9,4 +9,10 @@ class Voyage extends ESLModel
 {
     protected $fillable = ['quotation_id','name','voyage_no','internal_voyage_no','service_code','final_destination',
         'eta','vessel_arrived','time_allowed','laytime_start'];
+
+        public function quotation(){
+        	return $this->belongsTo(Quotation::class);
+        }
 }
+
+

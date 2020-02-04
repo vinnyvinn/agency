@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth']], function (){
     Route::get('/roles', 'ManageController@roleIndex');
     Route::post('/store-role', 'ManageController@storeRole');
     Route::get('/customer-request/{customer_id}/{customer_type}', 'CustomerRequestController@customerRequest');
+    Route::get('/save-template', 'CustomerRequestController@storeTemplate');
     Route::resource('/good-types', 'GoodTypeController');
     Route::resource('/container-types', 'ContainerTypeController');
     Route::resource('/leads', 'LeadController');
