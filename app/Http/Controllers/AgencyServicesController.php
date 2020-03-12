@@ -14,7 +14,7 @@ class AgencyServicesController extends Controller
      */
     public function index()
     {
-        return response()->json(Tariff::all());
+        return response()->json(['data' => Tariff::all()]);
 
     }
     /**
@@ -26,6 +26,6 @@ class AgencyServicesController extends Controller
     public function store(Request $request)
     {
         $tariff = Tariff::where('name', 'like', '%' . $request->name . '%')->first();
-        return response()->json($tariff);
+        return response()->json(['data' =>$tariff]);
     }
 }
