@@ -51,6 +51,7 @@ class DmsController extends Controller
 
          //dd($dms->quote);
         $dmsComponents = DmsComponent::with(['scomponent.stage'])->where('bill_of_landing_id',$id)->get();
+        
         $checklist = $dmsComponents->map(function ($value) {
 //            dd($value);
             return [

@@ -28,4 +28,5 @@ Route::middleware(['auth:api'])->group(function (){
     Route::get('/all-leads','Api\CustomersController@getAllLeads');
     Route::get('/single-lead/{id}','Api\CustomersController@getSingleLead');
     Route::get('/single-lead/{id}','Api\CustomersController@getSingleLead');
-});;
+});
+Route::apiResource('agency-services','AgencyServicesController');

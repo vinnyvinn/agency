@@ -26,8 +26,6 @@ class InvNumRepo
     {
         $this->inProforma = $proforma;
 //dd($invoiceData->quote->consignee);
-
-
           InvNum::create([
                      //dclink
                 'AccountID' => $proforma != null ? $proforma->customer->DCLink : $invoiceData->customer->DCLink,
