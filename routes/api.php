@@ -30,3 +30,4 @@ Route::middleware(['auth:api'])->group(function (){
     Route::get('/single-lead/{id}','Api\CustomersController@getSingleLead');
 });
 Route::apiResource('agency-services','AgencyServicesController');
+Route::apiResource('agency-quotations','AgencyQuotationController');

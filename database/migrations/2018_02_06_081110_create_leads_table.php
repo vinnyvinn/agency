@@ -17,8 +17,8 @@ class CreateLeadsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('contact_person');
-            $table->string('phone');
-            $table->string('email');
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->string('currency');
             $table->string('prospect_id')->nullable();
             $table->string('client_id')->nullable();
