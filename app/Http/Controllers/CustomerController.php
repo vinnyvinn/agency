@@ -216,7 +216,7 @@ class CustomerController extends Controller
 
     public function updateVessel(Request $request)
     {
-        Vessel::findOrFail($request->vessel_id)->update($request->all());
+        Vessel::findOrFail($request->vessel_id)->update($request->except(['vessel_id','quote_id']));
         NotificationRepo::create()->success('updated successfully');
         return Response(['success' => ['redirect' => url('/quotation/'.$request->quote_id)]]);
     }
@@ -224,27 +224,20 @@ class CustomerController extends Controller
     public function vesselDetails(Request $request)
     {
 
-        $vessels = Vessel::where('name', $request->name)
-            ->where('lead_id', $request->lead_id)->get();
-
-        if ($request->has('vessel_id') && !$vessels->isEmpty() && $request->quote_id != null){
-            Vessel::findOrFail($request->vessel_id)->update($request->all());
-            NotificationRepo::create()->success('updated successfully');
-            return Response(['success' => ['redirect' => url('/quotation/'.$request->quote_id)]]);
-        }
-        else{
-            $vessel = Vessel::create($request->all());
-
-            $quote = Quotation::create(['user_id'=>Auth::user()->id,
-                'lead_id' => $request->lead_id, 'vessel_id' => $vessel->id,
-                'status' => Constants::LEAD_QUOTATION_PENDING,
-                'project_id' => Project::all()->last()->ProjectLink +1
-            ]);
-
+//        $vessels = Vessel::where('name', $request->name)
+//            ->where('client_id', $request->client_id)->get();
+//
+//        if ($request->has('vessel_id') && !$vessels->isEmpty()){
+//            Vessel::findOrFail($request->vessel_id)->update($request->all());
+//            NotificationRepo::create()->success('updated successfully');
+//            return Response(['success' => ['redirect' => url('/quotation/'.$request->quote_id)]]);
+//        }
+//        else{
+            $vessel = Vessel::create($request->except('quotation_id'));
+            Quotation::find($request->quotation_id)->update(['user_id'=>Auth::user()->id,'vessel_id' =>$vessel->id]);
             NotificationRepo::create()->success('Quotation generated successfully');
-            
-            return Response(['success' => ['redirect' => url('/quotation/'.$quote->id)]]);
-        }
+            return Response(['success' => ['redirect' => url('/quotation/'.$request->quotation_id)]]);
+       // }
     }
 
     public function oVesselDetails(Request $request)
@@ -277,14 +270,18 @@ class CustomerController extends Controller
     {
         $data = $request->all();
 
-        $data['manifest_number'] = count(Cargo::all()).'/'.Date('Y');
-        $data['seal_no'] = count(Cargo::all()).'/'.Date('Y');
-        $cargo = Cargo::create($data);
-        $data['cargo_id'] = $cargo->id;
-        unset($data['quotation_id']);
-
-        Consignee::create($data);
-
+        $request['manifest_number'] = count(Cargo::all()).'/'.Date('Y');
+        $request['seal_no'] = count(Cargo::all()).'/'.Date('Y');
+        $cargo = Cargo::create($request->except(['consignee_name','consignee_tel','consignee_email','consignee_address','notifying_address','remarks']));
+           $consignee = [
+           'quotation_id' => $request->quotation_id,
+           'cargo_id' => $cargo->id,
+           'consignee_name' => $request->consignee_name,
+           'consignee_email' => $request->consignee_email,
+           'consignee_tel' => $request->consignee_tel,
+           'consignee_address' => $request->consignee_address
+       ];
+        Consignee::create($consignee);
         NotificationRepo::create()->success('Details added successfully');
 
         return Response(['success' => ['url' => url('/')]]);

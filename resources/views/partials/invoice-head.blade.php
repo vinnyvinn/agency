@@ -35,9 +35,10 @@
             </div>
         </div>
         <address>
-            <h4><b>PDA No</b> {{$quotation->id}}</h4>
+            <h4><b>CRM No</b> {{$quotation->crm_ref}}</h4>
+            <h4><b>PDA No</b> {{$quotation->internal_ref}}</h4>
             <h4><b>Voyage No</b> {{ $quotation->voyage == null ? '' : strtoupper($quotation->voyage->voyage_no) }}</h4>
-            <h4>Currency : {{ $quotation->lead->currency }}</h4>
+            <h4><b>Currency </b> {{ $quotation->lead->iCurrencyID ==1 ? 'USD' :'KES' }}</h4>
             <h4 id="vessel_name"><b>VESSEL</b> {{ strtoupper($quotation->vessel->name )}}</h4>
             <h4 id="grt"><b>GRT</b> {{ $quotation->vessel->grt }} GT</h4>
             <h4 id="loa"><b>LOA</b> {{ $quotation->vessel->loa }} M</h4>

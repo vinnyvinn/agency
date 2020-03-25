@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\BillDetail;
+use App\BillHeader;
 use App\BillOfLanding;
 use App\Cargo;
 use App\CashRequest;
@@ -240,6 +242,31 @@ class DmsController extends Controller
 
         $dms = BillOfLanding::with(['vessel.vDocs','sof','quote.services',
             'quote.voyage','customer','quote.cargos.consignee','quote.logs'])->findOrFail($id);
+        $date = Carbon::now()->format('yy-m-d');
+        $bill_header = BillHeader::create([
+            'QUOTE_NO' => $dms->quote->crm_ref,
+            'OPERATION_APP' => 'SL_LTD_GOLIVE',
+            'OPERATION_NO' => $dms->quote->internal_ref,
+            'DOC_TYPE' => 'INVOICE',
+            'INVOICE_DATE' => $date,
+            'PROJECT_ID' => '',
+            'CUST_ID' => $dms->Client_id,
+            'STATUS' => 'UNPOSTED',
+            'SAGE_INV_NO' => ''
+        ]);
+        foreach ($dms->quote->services as $service){
+            $bill_details = BillDetail::create([
+                'DEPT_NAME' => 'AGENCY',
+                'ITEM_ID' => $service->tariff_id,
+                'HEADER_ID' => $bill_header->SNo,
+                'ITEM_DESC' => $service->description,
+                'ITEM_QTY' => $service->units,
+                'UNIT_PRICE_EXCL' =>$service->total_excl,
+                'VAT' => $service->tax,
+                'UNIT_COST' => round((float)$service->buying_price/(float)$service->units,2),
+                'DOC_TYPE' => 'INVOICE'
+            ]);
+        }
 
         if ($dms->quote->status != Constants::LEAD_QUOTATION_CONVERTED){
 
@@ -299,6 +326,19 @@ class DmsController extends Controller
         foreach ($data['cargo_bl'] as $key => $datum){
             Cargo::findOrFail($key)->update(['bl_no'=>$datum]);
         }
+        unset($data['cargo_bl']);
+        unset($data['eta']);
+        unset($data['eta_time']);
+        unset($data['laytime_time']);
+        unset($data['ata']);
+        unset($data['ata_time']);
+        unset($data['date_of_loading_time']);
+        unset($data['dms_id']);
+        unset($data['days']);
+        unset($data['hour']);
+        unset($data['min']);
+        unset($data['sec']);
+
 //        dd($data,$dms);
         $dms->update($data);
 

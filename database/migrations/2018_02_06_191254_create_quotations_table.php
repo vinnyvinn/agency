@@ -16,10 +16,12 @@ class CreateQuotationsTable extends Migration
         Schema::create('quotations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('lead_id');
+            $table->integer('client_id');
             $table->integer('project_id')->nullable();
             $table->integer('approved_by')->nullable();
-            $table->integer('vessel_id');
+            $table->integer('vessel_id')->nullable();
+            $table->string('internal_ref')->nullable();
+            $table->string('crm_ref')->nullable();
             $table->integer('service_type_id')->nullable();
             $table->string('remittance')->default(0);
             $table->string('status');

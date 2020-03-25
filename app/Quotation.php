@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Quotation extends ESLModel
 {
-    protected $fillable = [ 'lead_id','user_id','checked_by','service_type_id','project_id','remittance',
-        'approved_by','vessel_id','status'];
-
+    protected $guarded = [];
     public function vessel()
     {
         return $this->hasOne(Vessel::class, 'id','vessel_id');
@@ -32,7 +30,7 @@ class Quotation extends ESLModel
 
     public function lead()
     {
-        return $this->hasOne(Lead::class, 'id','lead_id');
+        return $this->hasOne(Client::class, 'DCLink','client_id');
     }
 
     public function services()

@@ -22,6 +22,7 @@ class CreateTariffsTable extends Migration
             $table->string('unit_value');
             $table->string('unit_type');
             $table->string('unit');
+            $table->string('buying_price')->nullable();
             $table->timestamps();
         });
     }

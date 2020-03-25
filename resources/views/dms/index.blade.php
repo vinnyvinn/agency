@@ -32,7 +32,8 @@
                             <table class="table table-striped tbl-agency" id="tbl-agency">
                                 <thead>
                                 <tr>
-                                    {{--<th>BL</th>--}}
+                                    <th>#</th>
+                                    <th>Reference#</th>
                                     <th>Customer</th>
                                     <th>Vessel Name</th>
                                     <th>Voyage No</th>
@@ -47,7 +48,8 @@
                                 @foreach($dms as $dm)
                                     @if($dm->status == 0 && $dm->customer != null)
                                         <tr>
-                                            {{--<td>{{ $dm->bl_number }}</td>--}}
+                                            <td>{{ $dm->id }}</td>
+                                            <td>{{ $dm->internal_ref }}</td>
                                             <td>{{ ucwords($dm->customer->Name) }}</td>
                                             <td>{{ strtoupper($dm->vessel->name) }}</td>
                                             <td>{{ strtoupper($dm->quote->voyage ? $dm->quote->voyage->voyage_no : '') }}</td>
@@ -83,7 +85,8 @@
                             <table class="table table-striped tbl-agency" id="tbl-agency">
                                 <thead>
                                 <tr>
-                                    {{--<th>BL</th>--}}
+                                    <th>#</th>
+                                    <th>Reference#</th>
                                     <th>Customer</th>
                                     <th>Vessel Name</th>
                                     <th>Voyage No</th>
@@ -98,7 +101,8 @@
                                 @foreach($dms as $dm)
                                     @if($dm->status == 1 && $dm->customer != null)
                                         <tr>
-                                            {{--<td>{{ $dm->bl_number }}</td>--}}
+                                            <td>{{ $dm->id }}</td>
+                                            <td>{{ $dm->internal_ref }}</td>
                                             <td>{{ ucwords($dm->customer->Name) }}</td>
                                             <td>{{ strtoupper($dm->vessel->name) }}</td>
                                             <td>{{ $dm->quote->voyage ? strtoupper($dm->quote->voyage->voyage_no) : '' }}</td>

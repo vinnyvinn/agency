@@ -12,10 +12,7 @@ class BillOfLanding extends ESLModel
     return [];
 }
 //    protected $dateFormat = 'Y-m-d H:i:s';
-    protected  $fillable = ['vessel_id','time_allowed','service_type_id','code_name','voyage_id',
-        'quote_id',
-        'Client_id','cargo_id','place_of_receipt','date_of_loading','laytime_start',
-        'berth_number','seal_number','number_of_crane','sof_status','status','stage'];
+    protected  $guarded = [];
 
     public function vessel()
     {

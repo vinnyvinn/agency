@@ -29,10 +29,10 @@
                                     6th Floor, Moi Avenue Mombasa - Kenya <br>
                                     Email :agency@esl-eastafrica.com or ops@esl-eastafrica.com <br>
                                     Web: www.esl-eastafrica.com</h4>
-                                <h3> &nbsp;<b>TO : {{ ucwords($customer->name) }}</b></h3>
-                                <h4 class="m-l-5"><strong>Contact Person : </strong> {{ ucwords($customer->contact_person) }}
-                                    <br/> <strong>Tel/Email : </strong> {{ $customer->telephone }} {{ $customer->email }}
-                                    <br/> <strong>Phone : </strong> {{ $customer->phone }}
+                                <h3> &nbsp;<b>TO : {{ ucwords($customer->Name) }}</b></h3>
+                                <h4 class="m-l-5"><strong>Contact Person : </strong> {{ ucwords($customer->Contact_Person) }}
+                                    <br/> <strong>Tel/Email : </strong> {{ $customer->Telephone }} {{ $customer->EMail }}
+                                    <br/> <strong>Phone : </strong> {{ $customer->Telephone }}
                                 </h4>
                                 <br>
                                 {{--<h3><b>CARGO  {{ ucwords($customer->name) }}</b></h3>--}}
@@ -75,11 +75,12 @@
                                                 <form class="m-t-40" onsubmit="event.preventDefault();submitForm(this, '/vessel-details','redirect');" action="" id="vessel">
                                                     <div class="row">
                                                         <div class="col-sm-6">
+                                                            <input type="hidden" name="quotation_id" value="{{$quotation->id}}">
                                                             <div class="form-group">
                                                                 <label for="name">Vessel Name <span class="f_r">*</span></label>
                                                                 <input type="text" required id="name" name="name" class="form-control text-uppercase" placeholder="Name">
                                                             </div>
-                                                            <input type="hidden" name="lead_id" value="{{ $customer->id }}">
+                                                            <input type="hidden" name="client_id" value="{{ $customer->DCLink }}">
                                                             <div class="form-group">
                                                                 <label for="call_sign">Call Sign <span class="f_r">*</span></label>
                                                                 <input type="text" required id="call_sign" name="call_sign" class="form-control" placeholder="Call Sign">

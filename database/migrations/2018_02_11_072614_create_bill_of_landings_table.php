@@ -31,7 +31,9 @@ class CreateBillOfLandingsTable extends Migration
             $table->dateTime('date_of_loading')->nullable();
             $table->string('number_of_crane')->nullable();
             $table->string('sof_status')->default(0);
+            $table->string('bl_number')->nullable();
             $table->string('status')->default(0);
+            $table->string('internal_ref')->default();
             $table->timestamps();
         });
     }

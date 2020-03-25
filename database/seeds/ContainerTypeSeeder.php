@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Tariff;
-class TariffsSeeder extends Seeder
+use App\ContainerType;
+class ContainerTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class TariffsSeeder extends Seeder
      */
     public function run()
     {
-        //Tariff::create([''])
+        ContainerType::create(['name'=>'','description'=>'']);
     }
 }

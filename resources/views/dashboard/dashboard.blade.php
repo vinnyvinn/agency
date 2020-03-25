@@ -24,8 +24,7 @@
                         <div class="card-body">
                             <!-- Row -->
                             <div class="row">
-                                <h4>Generate Quotation</h4>
-                                <a href="{{ url('/leads') }}" class="btn btn-primary">Quotation</a>
+                                  <a href="{{ url('/all-pdas') }}" class="btn btn-primary">Quotations</a><br>
                                   <div class="tab-pane  p-20" id="profile" role="tabpanel" style="display: none;">
                                             {{--@if(count($quotation->cargos) < 1)--}}
                                             <button class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lgcargo">Quotation</button>

@@ -34,6 +34,8 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Reference#</th>
+                                    <th>CRM#</th>
                                     <th>Customer</th>
                                     <th>Contact Person</th>
                                     {{--<th>Phone</th>--}}
@@ -51,11 +53,13 @@
                                     @if($pda->status == \Esl\helpers\Constants::LEAD_QUOTATION_PENDING)
                                         <tr>
                                             <td>{{$pda->id}}</td>
-                                            <td>{{ ucwords($pda->lead->name) }}</td>
-                                            <td>{{ strtoupper($pda->lead->contact_person) }}</td>
+                                            <td>{{$pda->internal_ref}}</td>
+                                            <td>{{$pda->crm_ref}}</td>
+                                            <td>{{ ucwords($pda->lead->Name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->Contact_Person) }}</td>
                                             {{--<td>{{ strtoupper($pda->lead->phone) }}</td>--}}
-                                            <td>{{ strtoupper($pda->lead->email) }}</td>
-                                            <td>{{ strtoupper($pda->vessel->name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->EMail) }}</td>
+                                            <td>{{ strtoupper($pda->vessel ? $pda->vessel->name : '') }}</td>
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_discharge ) }}, {{ ucwords($pda->vessel->country_of_discharge ) }}</td>--}}
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_loading ) }}, {{ ucwords($pda->vessel->country_of_loading ) }}</td>--}}
 {{--                                            <td>{{ $pda->cargo == null ? ' ' : $pda->cargo->sum('weight')}}</td>--}}
@@ -83,6 +87,8 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Reference#</th>
+                                    <th>CRM#</th>
                                     <th>Customer</th>
                                     <th>Contact Person</th>
                                     <th>Email</th>
@@ -96,10 +102,12 @@
                                     @if($pda->status == \Esl\helpers\Constants::LEAD_QUOTATION_CHECKED)
                                         <tr>
                                             <td>{{$pda->id}}</td>
-                                            <td>{{ ucwords($pda->lead->name) }}</td>
-                                            <td>{{ strtoupper($pda->lead->contact_person) }}</td>
-                                            <td>{{ strtoupper($pda->lead->email) }}</td>
-                                            <td>{{ strtoupper($pda->vessel->name) }}</td>
+                                            <td>{{$pda->internal_ref}}</td>
+                                            <td>{{$pda->crm_ref}}</td>
+                                            <td>{{ ucwords($pda->lead->Name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->Contact_Person) }}</td>
+                                            <td>{{ strtoupper($pda->lead->EMail) }}</td>
+                                            <td>{{ strtoupper($pda->vessel ? $pda->vessel->name :'') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($pda->created_at)->format('d-M-y') }}</td>
                                             <td class="text-nowrap">
                                                 <a href=" {{ url('quotation/'. $pda->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-check"></i></a>
@@ -131,6 +139,8 @@
                                 <tr>
 
                                     <th>#</th>
+                                    <th>Reference#</th>
+                                    <th>CRM#</th>
                                     <th>Customer</th>
                                     <th>Contact Person</th>
                                     {{--<th>Phone</th>--}}
@@ -148,11 +158,13 @@
                                     @if($pda->status == \Esl\helpers\Constants::LEAD_QUOTATION_APPROVED)
                                         <tr>
                                             <td>{{$pda->id}}</td>
-                                            <td>{{ ucwords($pda->lead->name) }}</td>
-                                            <td>{{ strtoupper($pda->lead->contact_person) }}</td>
+                                            <td>{{$pda->internal_ref}}</td>
+                                            <td>{{$pda->crm_ref}}</td>
+                                            <td>{{ ucwords($pda->lead->Name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->Contact_Person) }}</td>
 {{--                                            <td>{{ strtoupper($pda->lead->phone) }}</td>--}}
-                                            <td>{{ strtoupper($pda->lead->email) }}</td>
-                                            <td>{{ strtoupper($pda->vessel->name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->EMail) }}</td>
+                                            <td>{{ strtoupper($pda->vessel ? $pda->vessel->name :'') }}</td>
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_discharge ) }}, {{ ucwords($pda->vessel->country_of_discharge ) }}</td>--}}
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_loading ) }}, {{ ucwords($pda->vessel->country_of_loading ) }}</td>--}}
 {{--                                            <td>{{ $pda->cargo == null ? ' ' : $pda->cargo->sum('weight')}}</td>--}}
@@ -183,6 +195,8 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Reference#</th>
+                                    <th>CRM#</th>
                                     <th>Customer</th>
                                     <th>Contact Person</th>
                                      <th>Email</th>
@@ -196,10 +210,12 @@
                                     @if($pda->status == \Esl\helpers\Constants::LEAD_QUOTATION_REQUEST)
                                         <tr>
                                             <td>{{$pda->id}}</td>
-                                            <td>{{ ucwords($pda->lead->name) }}</td>
-                                            <td>{{ strtoupper($pda->lead->contact_person) }}</td>
-                                            <td>{{ strtoupper($pda->lead->email) }}</td>
-                                            <td>{{ strtoupper($pda->vessel->name) }}</td>
+                                            <td>{{$pda->internal_ref}}</td>
+                                            <td>{{$pda->crm_ref}}</td>
+                                            <td>{{ ucwords($pda->lead->Name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->Contact_Person) }}</td>
+                                            <td>{{ strtoupper($pda->lead->EMail) }}</td>
+                                            <td>{{ strtoupper($pda->vessel ? $pda->vessel->name :'') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($pda->created_at)->format('d-M-y') }}</td>
                                             <td class="text-nowrap">
                                             <a href=" {{ url('quotation/'. $pda->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-check"></i></a>
@@ -230,6 +246,8 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Reference#</th>
+                                    <th>CRM#</th>
                                     <th>Customer</th>
                                     <th>Contact Person</th>
                                     {{--<th>Phone</th>--}}
@@ -247,11 +265,13 @@
                                     @if($pda->status == \Esl\helpers\Constants::LEAD_QUOTATION_WAITING)
                                         <tr>
                                             <td>{{$pda->id}}</td>
-                                            <td>{{ ucwords($pda->lead->name) }}</td>
-                                            <td>{{ strtoupper($pda->lead->contact_person) }}</td>
+                                            <td>{{$pda->internal_ref}}</td>
+                                            <td>{{$pda->crm_ref}}</td>
+                                            <td>{{ ucwords($pda->lead->Name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->Contact_Person) }}</td>
                                             {{--<td>{{ strtoupper($pda->lead->phone) }}</td>--}}
-                                            <td>{{ strtoupper($pda->lead->email) }}</td>
-                                            <td>{{ strtoupper($pda->vessel->name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->EMail) }}</td>
+                                            <td>{{ strtoupper($pda->vessel ? $pda->vessel->name :'') }}</td>
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_discharge ) }}, {{ ucwords($pda->vessel->country_of_discharge ) }}</td>--}}
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_loading ) }}, {{ ucwords($pda->vessel->country_of_loading ) }}</td>--}}
 {{--                                            <td>{{ $pda->cargo == null ? ' ' : $pda->cargo->sum('weight')}}</td>--}}
@@ -286,6 +306,8 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Reference#</th>
+                                    <th>CRM#</th>
                                     <th>Customer</th>
                                     <th>Contact Person</th>
                                     {{--<th>Phone</th>--}}
@@ -303,11 +325,13 @@
                                     @if($pda->status == \Esl\helpers\Constants::LEAD_QUOTATION_ACCEPTED)
                                         <tr>
                                             <td>{{$pda->id}}</td>
-                                            <td>{{ ucwords($pda->lead->name) }}</td>
-                                            <td>{{ strtoupper($pda->lead->contact_person) }}</td>
+                                            <td>{{$pda->internal_ref}}</td>
+                                            <td>{{$pda->crm_ref}}</td>
+                                            <td>{{ ucwords($pda->lead->Name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->Contact_Person) }}</td>
 {{--                                            <td>{{ strtoupper($pda->lead->phone) }}</td>--}}
-                                            <td>{{ strtoupper($pda->lead->email) }}</td>
-                                            <td>{{ strtoupper($pda->vessel->name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->EMail) }}</td>
+                                            <td>{{ strtoupper($pda->vessel ? $pda->vessel->name :'') }}</td>
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_discharge ) }}, {{ ucwords($pda->vessel->country_of_discharge ) }}</td>--}}
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_loading ) }}, {{ ucwords($pda->vessel->country_of_loading ) }}</td>--}}
 {{--                                            <td>{{ $pda->cargo == null ? ' ' : $pda->cargo->sum('weight')}}</td>--}}
@@ -342,6 +366,8 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Reference#</th>
+                                    <th>CRM#</th>
                                     <th>Customer</th>
                                     <th>Contact Person</th>
                                     {{--<th>Phone</th>--}}
@@ -359,11 +385,13 @@
                                     @if($pda->status == \Esl\helpers\Constants::LEAD_QUOTATION_DECLINED)
                                         <tr>
                                             <td>{{$pda->id}}</td>
-                                            <td>{{ ucwords($pda->lead->name) }}</td>
-                                            <td>{{ strtoupper($pda->lead->contact_person) }}</td>
+                                            <td>{{$pda->internal_ref}}</td>
+                                            <td>{{$pda->crm_ref}}</td>
+                                            <td>{{ ucwords($pda->lead->Name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->Contact_Person) }}</td>
 {{--                                            <td>{{ strtoupper($pda->lead->phone) }}</td>--}}
-                                            <td>{{ strtoupper($pda->lead->email) }}</td>
-                                            <td>{{ strtoupper($pda->vessel->name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->EMail) }}</td>
+                                            <td>{{ strtoupper($pda->vessel ? $pda->vessel->name :'') }}</td>
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_discharge ) }}, {{ ucwords($pda->vessel->country_of_discharge ) }}</td>--}}
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_loading ) }}, {{ ucwords($pda->vessel->country_of_loading ) }}</td>--}}
 {{--                                            <td>{{ $pda->cargo == null ? ' ' : $pda->cargo->sum('weight')}}</td>--}}
@@ -398,6 +426,8 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Reference#</th>
+                                    <th>CRM#</th>
                                     <th>Customer</th>
                                     <th>Contact Person</th>
                                     {{--<th>Phone</th>--}}
@@ -415,11 +445,13 @@
                                     @if($pda->status == \Esl\helpers\Constants::LEAD_QUOTATION_DECLINED_CUSTOMER)
                                         <tr>
                                             <td>{{$pda->id}}</td>
-                                            <td>{{ ucwords($pda->lead->name) }}</td>
-                                            <td>{{ strtoupper($pda->lead->contact_person) }}</td>
+                                            <td>{{$pda->internal_ref}}</td>
+                                            <td>{{$pda->crm_ref}}</td>
+                                            <td>{{ ucwords($pda->lead->Name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->Contact_Person) }}</td>
 {{--                                            <td>{{ strtoupper($pda->lead->phone) }}</td>--}}
-                                            <td>{{ strtoupper($pda->lead->email) }}</td>
-                                            <td>{{ strtoupper($pda->vessel->name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->EMail) }}</td>
+                                            <td>{{ strtoupper($pda->vessel ? $pda->vessel->name :'') }}</td>
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_discharge ) }}, {{ ucwords($pda->vessel->country_of_discharge ) }}</td>--}}
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_loading ) }}, {{ ucwords($pda->vessel->country_of_loading ) }}</td>--}}
 {{--                                            <td>{{ $pda->cargo == null ? ' ' : $pda->cargo->sum('weight')}}</td>--}}
@@ -454,6 +486,8 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Reference#</th>
+                                    <th>CRM#</th>
                                     <th>Customer</th>
                                     <th>Contact Person</th>
                                     {{--<th>Phone</th>--}}
@@ -463,7 +497,7 @@
                                     {{--<th>Port Of Loading</th>--}}
                                     {{--<th>Cargo Weight</th>--}}
                                     <th>Created</th>
-                                    {{--<th class="text-nowrap">Action</th>--}}
+                                    <th class="text-nowrap">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id="customers">
@@ -471,20 +505,22 @@
                                     @if($pda->status == \Esl\helpers\Constants::LEAD_QUOTATION_CONVERTED)
                                         <tr>
                                             <td>{{$pda->id}}</td>
-                                            <td>{{ ucwords($pda->lead->name) }}</td>
-                                            <td>{{ strtoupper($pda->lead->contact_person) }}</td>
+                                            <td>{{$pda->internal_ref}}</td>
+                                            <td>{{$pda->crm_ref}}</td>
+                                            <td>{{ ucwords($pda->lead->Name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->Contact_Person) }}</td>
 {{--                                            <td>{{ strtoupper($pda->lead->phone) }}</td>--}}
-                                            <td>{{ strtoupper($pda->lead->email) }}</td>
-                                            <td>{{ strtoupper($pda->vessel->name) }}</td>
+                                            <td>{{ strtoupper($pda->lead->EMail) }}</td>
+                                            <td>{{ strtoupper($pda->vessel ? $pda->vessel->name :'') }}</td>
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_discharge ) }}, {{ ucwords($pda->vessel->country_of_discharge ) }}</td>--}}
 {{--                                            <td>{{ ucwords($pda->vessel->port_of_loading ) }}, {{ ucwords($pda->vessel->country_of_loading ) }}</td>--}}
 {{--                                            <td>{{ $pda->cargo == null ? ' ' : $pda->cargo->sum('weight')}}</td>--}}
                                             {{--                                        <td>{{ $dm->stage }}</td>--}}
                                             <td>{{ \Carbon\Carbon::parse($pda->created_at)->format('d-M-y') }}</td>
-                                            {{--<td class="text-nowrap">--}}
-                                            {{--<a href=" {{ url('quotation/'. $pda->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-check"></i></a>--}}
+                                            <td class="text-nowrap">
+                                            <a href=" {{ url('quotation/'. $pda->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-check"></i></a>
 
-                                            {{--</td>--}}
+                                            </td>
                                         </tr>
                                     @endif
                                 @endforeach

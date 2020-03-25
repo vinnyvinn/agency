@@ -7,11 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cargo extends ESLModel
 {
-    protected $fillable = ['name','lead_id','quotation_id','good_type_id','manifest_number','type','seal_no',
-        'container_id','case_qty','t_net_weight','volume','container_size','load_status',
-        't_gross_weight','shipping_line','discharge_rate','hs_no','bl_no',
-        'port_stay','shipping_type','description','package','weight',
-        'total_package','shipper','notifying_address','remarks'];
+    protected $guarded = [];
 
     public function quotation()
     {

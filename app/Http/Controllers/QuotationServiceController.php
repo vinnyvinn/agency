@@ -18,7 +18,7 @@ class QuotationServiceController extends Controller
     public function addQuotationService(Request $request)
     {
         $data = $request->all();
-
+   //  dd($data);
         if ($request->has('type')){
             if ($request->proforma == null){
                 $proforma = Proforma::create([
@@ -52,7 +52,12 @@ class QuotationServiceController extends Controller
                 'agency_sp' => $datum['agency_sp'],
                 'units' => $datum['units'],
                 'tax' => $datum['tax_amount'],
-                'total' => (float)$datum['total']
+                'total' => (float)$datum['total'],
+                'total_excl' => round((float)$datum['total_excl'],2),
+                'buying_price' => round((float)$datum['buying_price'],2),
+                'gp' => round((float)$datum['gp'],2),
+                'gp_percentage' => round((float)$datum['gp_percentage'],2),
+
             ]);
         }
 

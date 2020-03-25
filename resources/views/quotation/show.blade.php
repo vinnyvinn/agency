@@ -72,8 +72,8 @@
                                                                         <div class="row">
                                                                             <div class="col-sm-6">
                                                                                 <div class="form-group">
-                                                                                    <input type="hidden" value="{{$quotation->lead_id}}" name="lead_id">
-                                                                                    <input type="hidden" value="{{$quotation->vessel->id}}" name="vessel_id">
+                                                                                    <input type="hidden" value="{{$quotation->client_id}}" name="client_id">
+                                                                                    <input type="hidden" value="{{$quotation->vessel_id}}" name="vessel_id">
                                                                                     <label for="name">Vessel Name</label>
                                                                                     <input type="text" required id="name" name="name" value="{{ $quotation->vessel->name }}" class="form-control" placeholder="Name">
                                                                                 </div>
@@ -169,7 +169,7 @@
                                                                                 <label for="name">Cargo Name</label>
                                                                                 <input type="text" required id="name" name="name" class="form-control" placeholder="Name">
                                                                             </div>
-                                                                            <input type="hidden" name="lead_id" value="{{ $quotation->lead_id }}">
+                                                                            <input type="hidden" name="client_id" value="{{ $quotation->client_id }}">
                                                                             <input type="hidden" name="quotation_id" value="{{ $quotation->id }}">
                                                                             <div class="form-group">
                                                                                 <label for="good_type_id">Cargo Type</label>
@@ -344,7 +344,7 @@
                                                                                                     <input type="text" required  value="{{ $cargo->name }}" id="name" name="name" class="form-control" placeholder="Name">
                                                                                                 </div>
                                                                                                 <input type="hidden" name="cargo_id" value="{{ $cargo->id }}">
-                                                                                                <input type="hidden" name="lead_id" value="{{ $cargo->lead_id }}">
+                                                                                                <input type="hidden" name="client_id" value="{{ $cargo->client_id }}">
                                                                                                 <input type="hidden" name="quotation_id" value="{{ $cargo->quotation_id }}">
                                                                                                 <div class="form-group">
                                                                                                     <label for="goodtype_id">Cargo Type</label>
@@ -564,7 +564,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <input type="number" required id="agency_sp" name="agency_sp" placeholder="Selling Price" class="form-control agency_sp">
+                                                    <input type="number" required id="agency_sp" name="agency_sp" placeholder="Selling Price" class="form-control agency_sp">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
@@ -586,15 +586,17 @@
                                     <table class="table table-striped table-responsive">
                                         <thead>
                                         <tr>
-                                        <tr>
                                             <th>Description</th>
                                             <th class="text-right">GRT/LOA</th>
                                             <th class="text-right">RATE</th>
                                             <th class="text-right">UNITS</th>
                                             <th class="text-right">Tax</th>
                                             <th class="text-right">Total (Incl)</th>
+                                            <th class="text-right">Total (Excl)</th>
+                                            <th class="text-right">Buying Price</th>
+                                            <th class="text-right">GP Amount</th>
+                                            <th class="text-right">GP %</th>
                                             <th class="text-right">Action</th>
-                                        </tr>
                                         </tr>
                                         </thead>
                                         <tbody id="service">
@@ -648,15 +650,17 @@
                                             <table class="table table-striped table-responsive">
                                                 <thead>
                                                 <tr>
-                                                <tr>
                                                     <th>Description</th>
                                                     <th class="text-right">GRT/LOA</th>
                                                     <th class="text-right">RATE</th>
                                                     <th class="text-right">UNITS</th>
                                                     <th class="text-right">Tax</th>
                                                     <th class="text-right">Total (Incl)</th>
+                                                    <th class="text-right">Total (Excl)</th>
+                                                    <th class="text-right">Buying Price</th>
+                                                    <th class="text-right">GP Amount</th>
+                                                    <th class="text-right">GP %</th>
                                                     <th class="text-right">Action</th>
-                                                </tr>
                                                 </tr>
                                                 </thead>
                                                 <tbody id="service">
@@ -664,7 +668,7 @@
                                           <br>
                                     <b>Tax Registration</b>: 0121303W <br>
                                     <b>Telephone</b>: +254 41 2229784
-                                </h4>  </table>
+                                 </table>
                                             <button onclick="addServiceToQuotaion()" class="btn btn-primary pull-right">Add Service</button>
                                         </div>
                                     </div>
@@ -677,7 +681,11 @@
                                     <th class="text-right">RATE</th>
                                     <th class="text-right">UNITS</th>
                                     <th class="text-right">Tax</th>
-                                    <th class="text-right">Total (Incl)</th>
+                                    <th class="text-right">Total (Incl)
+                                    <th class="text-right">Total (Excl)</th>
+                                    <th class="text-right">Buying Price</th>
+                                    <th class="text-right">GP Amount</th>
+                                    <th class="text-right">GP %</th>
                                     <th class="text-right">Action</th>
                                 </tr>
                                 </thead>
@@ -690,6 +698,10 @@
                                         <td class="text-right">{{ $service->units }}</td>
                                         <td class="text-right">{{ $service->tax_amount }}</td>
                                         <td class="text-right">{{ number_format($service->total,2) }}</td>
+                                        <td class="text-right">{{ number_format($service->total_excl,2) }}</td>
+                                        <td class="text-right">{{ number_format($service->buying_price,2) }}</td>
+                                        <td class="text-right">{{ number_format($service->gp,2) }}</td>
+                                        <td class="text-right">{{ number_format($service->gp_percentage,2) }}</td>
                                         <td class="text-right">
                                             @can('can-edit-quote')
                                             <button data-toggle="modal" data-target=".bs-example-modal-lg{{$service->id}}" class="btn btn-xs btn-primary">
@@ -771,9 +783,9 @@
                     <div class="col-md-12">
                         <form>
                         <div class="pull-right m-t-30 text-right">
-                            <p id="sub_ex"><b>Total (Excl)</b> {{$quotation->lead->currency }} : {{ number_format(($quotation->services->sum('total',2) - $quotation->services->sum('tax')),2) }}</p>
-                            <p id="total_tax"><b>Tax</b> {{$quotation->lead->currency }} : {{ number_format($quotation->services->sum('tax'),2) }} </p>
-                            <p id="sub_in"><b>Total (Incl)</b> {{$quotation->lead->currency }} : <span class="sum-total">{{ number_format($quotation->services->sum('total'),2) }} </span></p>
+                            <p id="sub_ex"><b>Total (Excl)</b> {{$quotation->lead->iCurrencyID ==1 ? 'USD' :'KES' }} : {{ number_format(($quotation->services->sum('total',2) - $quotation->services->sum('tax')),2) }}</p>
+                            <p id="total_tax"><b>Tax</b> {{$quotation->lead->iCurrencyID ==1 ? 'USD' :'KES'}} : {{ number_format($quotation->services->sum('tax'),2) }} </p>
+                            <p id="sub_in"><b>Total (Incl)</b> {{$quotation->lead->iCurrencyID ==1 ? 'USD' :'KES' }} : <span class="sum-total">{{ number_format($quotation->services->sum('total'),2) }} </span></p>
 
                             <p id="rem_amount"><b>Remittance</b> <input type="text" value="{{ $quotation->remittance }}" name="remittance" id="add-rem"  class="form-control" style="width: 30% !important;">
                                 <input type="hidden" name="quote_id" value="{{$quotation->id}}">
@@ -781,14 +793,14 @@
                             </p>
 
                             <hr>
-                            <h3 id="total_amount">Balance (Incl) {{$quotation->lead->currency }} : <span class="bal">{{ number_format(($quotation->services->sum('total') - $quotation->remittance),2) }}</span></h3>
+                            <h3 id="total_amount">Balance (Incl) {{$quotation->lead->iCurrencyID ==1 ? 'USD' :'KES' }} : <span class="bal">{{ number_format(($quotation->services->sum('total') - $quotation->remittance),2) }}</span></h3>
 
                             @if($quotation->status == \Esl\helpers\Constants::LEAD_QUOTATION_DECLINED)
                             @can('can-add-remittance')
                             <form class="form-inline" action="">
                                 <div class="form-group">
                                     <label for="remittance">Remittance</label>
-                                    <input type="number" name="remittance" id="remittance" placeholder="Remittance Amount in {{$quotation->lead->currency}}" class="form-control">
+                                    <input type="number" name="remittance" id="remittance" placeholder="Remittance Amount in {{$quotation->lead->iCurrencyID ==1 ? 'USD' :'KES'}}" class="form-control">
                                 </div>
                                 <button type="button" onclick="addRemittance()" class="btn btn-primary">Add Remittance</button>
                                 <button type="button" onclick="reduceRemittance()" class="btn btn-danger">Reduce Remittance</button>
@@ -885,7 +897,7 @@
                                                                            placeholder="Subject">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input type="email" value="{{$quotation->lead->email}}" required id="email" name="email" class="form-control"
+                                                                    <input type="email" value="{{$quotation->lead->EMail}}" required id="email" name="email" class="form-control"
                                                                            placeholder="Client Email">
                                                                 </div>
                                                                 <div class="form-group">
@@ -1109,7 +1121,7 @@
 
 
         var form = $('#pda_remarks_form');
-        var currency = '{{$quotation->lead->currency }}';
+        var currency = '{{$quotation->lead->iCurrencyID ==1 ? 'USD' :'KES' }}';
 
         function remark() {
             var formData = form.serializeArray().reduce(function (obj, item){
@@ -1159,7 +1171,7 @@
 
             'grt' : '{{ $quotation->vessel->grt }}',
             'loa' : '{{ $quotation->vessel->loa }}',
-            'currency' : '{{$quotation->lead->currency}}',
+            'currency' : '{{$quotation->lead->iCurrencyID ==1 ? 'USD' :'KES'}}',
             '_token' : '{{ csrf_token() }}',
             'c_weight' : '{{ count($quotation->cargos) < 1 ? 0 : $quotation->cargos->sum('weight') }}',
             'quotation' : '{{ $quotation->id }}',
@@ -1274,6 +1286,10 @@
                         'rate' : selectedTariff.rate,
                         'agency_sp' : agency_sp,
                         'units' : serviceUnit,
+                        'buying_price':parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit),
+                        'gp':(parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)),
+                        'gp_percentage':((parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)*parseFloat(serviceUnit)))/(parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))*100,
+                        'total_excl':parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit),
                         'total' : ((parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit)) + ((selectedTax.TaxRate * (parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))) / 100))
                     }
 
@@ -1300,6 +1316,10 @@
                         'rate' : selectedTariff.rate,
                         'agency_sp' : agency_sp,
                         'units' : serviceUnit,
+                        'buying_price':parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit),
+                        'gp':(parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)),
+                        'gp_percentage':((parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)))/(parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))*100,
+                        'total_excl':parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit),
                         'total' : ((parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit)) + ((selectedTax.TaxRate * (parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))) / 100))
                     }
 
@@ -1325,6 +1345,10 @@
                         'rate' : selectedTariff.rate,
                         'agency_sp' : agency_sp,
                         'units' : serviceUnit,
+                        'buying_price':parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit),
+                        'gp':(parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)),
+                        'gp_percentage':((parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)))/(parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))*100,
+                        'total_excl':parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit),
                         'total' : ((parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit)) + ((selectedTax.TaxRate * (parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))) / 100))
                     }
 
@@ -1351,6 +1375,10 @@
                         'rate' : selectedTariff.rate,
                         'agency_sp' : agency_sp,
                         'units' : serviceUnit,
+                        'buying_price':parseFloat(selectedTariff.buying_price)*parseFloat(serviceUnit),
+                        'gp':(parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)),
+                        'gp_percentage':((parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)))/(parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))*100,
+                        'total_excl':parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit),
                         'total' : ((parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit)) + ((selectedTax.TaxRate * (parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))) / 100))
                     }
 
@@ -1375,6 +1403,10 @@
                         'rate' : selectedTariff.rate,
                         'agency_sp' : agency_sp,
                         'units' : serviceUnit,
+                        'buying_price':parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit),
+                        'gp':(parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)),
+                        'gp_percentage':((parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)))/(parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))*100,
+                        'total_excl':parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit),
                         'total' : (((selectedTax.TaxRate * (parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))) / 100) + (parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit)))
                     }
 
@@ -1400,6 +1432,10 @@
                         'rate' : selectedTariff.rate,
                         'agency_sp' : agency_sp,
                         'units' : serviceUnit,
+                        'buying_price':parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit),
+                        'gp':(parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)),
+                        'gp_percentage':((parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)))/(parseFloat(agency_sp)* parseFloat(serviceUnit))*100,
+                        'total_excl':parseFloat(agency_sp)* parseFloat(serviceUnit),
                         'total' : ((parseFloat(agency_sp)* parseFloat(serviceUnit)) + ((selectedTax.TaxRate * (parseFloat(agency_sp)* parseFloat(serviceUnit))) / 100))
                     }
 
@@ -1424,6 +1460,10 @@
                         'rate' : selectedTariff.rate,
                         'agency_sp' : agency_sp,
                         'units' : serviceUnit,
+                        'buying_price':parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit),
+                        'gp':(parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)),
+                        'gp_percentage':((parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)))/(parseFloat(agency_sp)* parseFloat(serviceUnit))*100,
+                        'total_excl':parseFloat(agency_sp)* parseFloat(serviceUnit),
                         'total' : ((parseFloat(agency_sp)* parseFloat(serviceUnit)) + ((selectedTax.TaxRate * parseFloat(agency_sp)* parseFloat(serviceUnit))) / 100)
                     }
 
@@ -1471,10 +1511,14 @@
                         'rate' : tre,
                         'agency_sp' : tre,
                         'units' : serviceUnit,
+                        'buying_price':parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit),
+                        'gp':((parseFloat(tre )* parseFloat(serviceUnit)))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)),
+                        'gp_percentage':(((parseFloat(tre )* parseFloat(serviceUnit)))-(parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit)))/(parseFloat(tre )* parseFloat(serviceUnit))*100,
+                        'total_excl':(parseFloat(tre )* parseFloat(serviceUnit)),
                         'total' : (((selectedTax.TaxRate  * (parseFloat(tre )* parseFloat(serviceUnit))) / 100) + (parseFloat(tre )* parseFloat(serviceUnit)))
                     }
 
-                    addService(serviceData);
+                   // addService(serviceData);
                     addService(serviceData2);
                 }
 
@@ -1496,6 +1540,10 @@
                         'rate' : selectedTariff.rate,
                         'agency_sp' : agency_sp,
                         'units' : serviceUnit,
+                        'buying_price':parseFloat(selectedTariff.buying_price)* parseFloat(serviceUnit),
+                        'gp':(parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)*parseFloat(serviceUnit)),
+                        'gp_percentage':((parseFloat(agency_sp)* parseFloat(serviceUnit))-(parseFloat(selectedTariff.buying_price)*parseFloat(serviceUnit)))/( parseFloat(agency_sp)* parseFloat(serviceUnit))*100,
+                        'total_excl':parseFloat(agency_sp)* parseFloat(serviceUnit),
                         'total' : (((selectedTax.TaxRate * (parseFloat(agency_sp)* parseFloat(serviceUnit))) / 100) + (parseFloat(agency_sp)* parseFloat(serviceUnit)))
                     }
                     addService(serviceData);
@@ -1514,6 +1562,10 @@
                 '<td class="text-right">' + Number(data.units).toFixed(2) + '</td>' +
                 '<td class="text-right">' + data.tax_amount +' </td>' +
                 '<td class="text-right">' + Number(data.total).toFixed(2)+ '</td>' +
+                '<td class="text-right">' + Number(data.total_excl).toFixed(2)+ '</td>' +
+                '<td class="text-right">' + Number(data.buying_price).toFixed(2)+ '</td>' +
+                '<td class="text-right">' + Number(data.gp).toFixed(2)+ '</td>' +
+                '<td class="text-right">' + Number(data.gp_percentage).toFixed(2)+ '</td>' +
                 '<td class="text-right"><button onclick="deleteRow(this)" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>' +
                 '</tr>');
             this.data.service[data.id] = data;

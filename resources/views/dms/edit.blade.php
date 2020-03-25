@@ -1295,7 +1295,7 @@
                                                     <tr>
                                                         <td>{{\Carbon\Carbon::parse($values->created_at)->format('d-M-y H:m:s')}}</td>
                                                         <td>{{json_decode($values->details)->vessel->name}}</td>
-                                                        <td>{{ json_decode($values->details)->lead->currency }}, {{collect(json_decode($values->details)->services)->sum('total')}}</td>
+                                                        <td>{{ json_decode($values->details)->lead->iCurrencyID ==1 ? 'USD' :'KES' }}, {{collect(json_decode($values->details)->services)->sum('total')}}</td>
                                                         <td class="text-right">
                                                             <a target="_blank" href="{{ url('quotation/preview/'.$dms->quote_id)}}" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a>
                                                         </td>

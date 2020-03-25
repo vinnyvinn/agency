@@ -16,7 +16,7 @@ class CreateLeadsTable extends Migration
         Schema::create('leads', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('contact_person');
+            $table->string('contact_person')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('currency');
@@ -25,7 +25,7 @@ class CreateLeadsTable extends Migration
             $table->string('telephone')->nullable();
             $table->string('cPhysicalAddress1')->nullable();
             $table->string('cPhysicalAddress2')->nullable();
-            $table->string('status')->default(0);
+            $table->string('status')->default(0)->nullable();
             $table->timestamps();
         });
     }

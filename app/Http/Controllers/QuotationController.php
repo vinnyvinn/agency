@@ -36,7 +36,9 @@ class QuotationController extends Controller
                 $query->where('type', 'pda');
             }
         ])->findOrFail($id);
-
+         if (!$quote->vessel_id){
+             return redirect('/customer-request/'.$id);
+         }
         if ($quote->service_type_id != null) {
 
             return view('quotation.other-service')
@@ -306,26 +308,29 @@ class QuotationController extends Controller
         )
             ->success('Job started successfully');
 //TODO:CRE
-        $leadData = $quotation->lead;
+       // $leadData = $quotation->lead;
 //        dd($leadData);
-        $customer = CustomersRepo::customerInit()->convertLeadToCustomer($leadData->toArray());
+       // $customer = CustomersRepo::customerInit()->convertLeadToCustomer($leadData->toArray());
 
 //        dd(isset());
+        $bl_count = BillOfLanding::count()+1;
+        $date = Carbon::now()->format('d-M-y');
         $bl = BillOfLanding::create([
             'vessel_id' => $quotation->vessel_id,
             'quote_id' => $quotation->id,
             'service_type_id' => $quotation->service_type_id != null ? $quotation->service_type_id : null,
             'voyage_id' => $quotation->service_type_id != null ? 0 : $quotation->id,
 //            'consignee_id' => $quotation->service_type_id != null ? 0 : $quotation->consignee->id,
-            'Client_id' => isset($customer['client_id']) ? $customer['DCLink'] : $customer->DCLink,
+            'Client_id' =>$quotation->client_id,
             'laytime_start' => Carbon::now(),
             'time_allowed' => 0,
-//            'cargo_id' => $quotation->cargos->first()->id,
+//           'cargo_id' => $quotation->cargos->first()->id,
             'cargo_id' => 0,
             'stage' => 'Pre-arrival docs',
             'status' => 0,
             'sof_status' => 0,
             'bl_number' => '',
+            'internal_ref' => 'J'.$date.'-'.$bl_count
         ]);
 
         return redirect('/dms/edit/' . $bl->id);

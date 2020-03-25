@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\Consignee;
 use App\ContainerType;
 use App\Customer;
@@ -25,9 +26,8 @@ class ProformaController extends Controller
             $query->where('type','proforma');
         }])->where('consignee_id', $id)->get()->first();
 
-        $client = $proforma == null ? null : Customer::findOrFail($proforma->lead_id);
+        $client = $proforma == Client::where('DCLink',$quote->client_id)->first();
 //        dd($proforma, $client);
-
         return view('quotation.proforma')
             ->withQuotation($proforma)
             ->withQuote($quote)

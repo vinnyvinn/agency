@@ -7,13 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vessel extends ESLModel
 {
-    protected $fillable = ['lead_id','name','imo_number','country_of_discharge','country_of_loading',
-        'country','call_sign','port_of_loading_code','port_of_discharge_code','loading_type',
-        'loa','grt','eta','nrt','dwt','port_of_discharge','port_of_loading'];
+    protected $guarded = [];
 
     public function lead()
     {
-        return $this->hasMany(Lead::class,'id','lead_id');
+        return $this->hasMany(Client::class, 'DCLink','client_id');
     }
 
     public function setNameAttribute($name)

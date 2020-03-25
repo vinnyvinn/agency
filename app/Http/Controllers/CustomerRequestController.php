@@ -2,30 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use App\GoodType;
 use App\Lead;
+use App\Quotation;
 use Esl\helpers\Constants;
 use Illuminate\Http\Request;
 
 class CustomerRequestController extends Controller
 {
-    public function customerRequest(Request $request, $customer_id, $customer_type)
+    public function customerRequest($quotation)
     {
-        $lead = Lead::findOrfail($customer_id);
+        $quote = Quotation::find($quotation);
+        $customer = Client::where('DCLink',$quote->client_id)->first();
 
-        if ($customer_type == Constants::LEAD_CUSTOMER)
-        {
+//        if ($customer_type == Constants::LEAD_CUSTOMER)
+//        {
+//
+//            return view('customers.request')
+//                ->withCustomer($lead);
+//        }
 
-            return view('customers.request')
-                ->withCustomer($lead);
-        }
+//        if ($customer_type == '000'){
+//
+//            return view('customers.other-request')
+//                ->withCustomer($lead)
+//                ->withType($request->type);
+//        }
 
-        if ($customer_type == '000'){
-
-            return view('customers.other-request')
-                ->withCustomer($lead)
-                ->withType($request->type);
-        }
+        return view('customers.request')
+            ->withCustomer($customer)
+            ->withQuotation($quote);
     }
 
     public function storeTemplate(){

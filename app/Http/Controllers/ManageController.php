@@ -52,12 +52,6 @@ class ManageController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        Mail::to(['email'=>$data['email']])
-            ->cc(['marvincollins114@gmail.com'])
-            ->send(new UserCreated(['name'=>$data['name'],
-                'password'=>'Contact IT for password',
-                'email'=>$data['email']]));
-
         Mail::to(['email'=>'evans.ngala@esl-eastafrica.com'])
             ->cc(['kituyiv@gmail.com'])
             ->send(new UserCreated(['name'=>$data['name'],

@@ -6,7 +6,7 @@
                         <i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
                 </li>
                 @can('manage-leads')
-                    <li> <a class="has-arrow waves-effect waves-dark" href="{{ url('/leads') }}" aria-expanded="false">
+                    <li style="display: none"> <a class="has-arrow waves-effect waves-dark" href="{{ url('/leads') }}" aria-expanded="false">
                             <i class="mdi mdi-gauge"></i><span class="hide-menu">Leads</span></a>
                     </li>
                 @endcan
