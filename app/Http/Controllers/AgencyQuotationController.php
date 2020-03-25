@@ -32,7 +32,7 @@ class AgencyQuotationController extends Controller
      */
     public function store(Request $request)
     {
-        $formatted = json_decode($request->all());
+        $formatted = json_decode($request->get('quotation'));
         $date = Carbon::now()->format('d-M-y');
         $quote = Quotation::count()+1;
         $quotationData = [
