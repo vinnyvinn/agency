@@ -1419,7 +1419,7 @@
                                                         <button data-toggle="modal" data-target=".bs-example-modal-servicecost" class="btn btn-info">
                                                             Add Project Service Cost
                                                         </button>
-                                                        <button data-toggle="modal" data-target=".bs-example-modal-allreqfund" class="btn btn-success">
+                                                        <button style="display: none" data-toggle="modal" data-target=".bs-example-modal-allreqfund" class="btn btn-success">
                                                             View Requested Fund
                                                         </button>
 
@@ -1656,14 +1656,17 @@
                                                                     <div class="col-12">
                                                                         <div class="row">
                                                                             <div class="col-sm-12">
+
                                                                                 @if($dms->quote)
                                                                                 <table class="table table-stripped">
                                                                                     <thead>
                                                                                     <tr>
                                                                                         <th>Service Name</th>
-                                                                                        <th>Receipt</th>
-                                                                                        <th>Selling Price</th>
+                                                                                        <th>Total Excl</th>
+                                                                                        <th>Total Incl</th>
                                                                                         <th>Cost</th>
+                                                                                        <th>GP Amount</th>
+                                                                                        <th>GP %</th>
                                                                                         <th class="text-right">Profit</th>
                                                                                         {{--<th>Action</th>--}}
                                                                                     </tr>
@@ -1672,15 +1675,17 @@
                                                                                     @foreach($dms->quote->services as $service)
                                                                                         <tr>
                                                                                             <td>{{ ucwords($service->description) }}</td>
-                                                                                            <td><a target="_blank" href="{{ url(asset($service->doc_path == null ? '' : $service->doc_path)) }}">{{ $service->doc_path == null ? '' : 'Download'}}</a></td>
+                                                                                            <td>{{ number_format($service->total_excl,2)}}</td>
                                                                                             <td>{{ number_format($service->total,2)}}</td>
-                                                                                            <td>{{ $service->buying_price == null ? 'Add Service Cost' : number_format($service->buying_price,2) }}</td>
+                                                                                            <td>{{ number_format($service->buying_price,2) }}</td>
                                                                                             <td class="text-right">{{ $service->buying_price == null ? 'Add Service Cost' : number_format(($service->total - $service->buying_price),2) }}</td>
                                                                                             {{--<td>--}}
                                                                                             {{--<button data-toggle="modal" data-target=".bs-example-modal-servicecost" class="btn btn-xs btn-success" data-dismiss="modal">--}}
                                                                                             {{--<i class="fa fa-pencil"></i>--}}
                                                                                             {{--</button>--}}
                                                                                             {{--</td>--}}
+                                                                                            <td>{{ number_format($service->gp,2) }}</td>
+                                                                                            <td>{{ number_format($service->gp_percentage,2) }}</td>
                                                                                         </tr>
                                                                                     @endforeach
                                                                                     </tbody>
@@ -1699,7 +1704,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button data-toggle="modal" data-target=".bs-example-modal-servicecost" class="btn btn-info" data-dismiss="modal">
+                                                                    <button style="display: none" data-toggle="modal" data-target=".bs-example-modal-servicecost" class="btn btn-info" data-dismiss="modal">
                                                                         Add Project Service Cost
                                                                     </button>
                                                                     <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>

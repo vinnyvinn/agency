@@ -218,7 +218,7 @@ class AgencyQuotationController extends Controller
                     'units' => round((float)$item->quantity, 2),
                     'tax' => round((float)$item->tax_total, 2),
                     'total' => round((float)$item->total_cost, 2),
-                    'buying_price' =>round((float)$service->buying_price*(float)$item->units),
+                    'buying_price' =>round((float)$service->buying_price*(float)$item->quantity),
                     'gp' => round(((float)$item->total_cost-(float)$item->tax_total)-(float)$service->buying_price,2),
                     'gp_percentage' => round((((float)$item->total_cost-(float)$item->tax_total)-(float)$service->buying_price)/((float)$item->total_cost-(float)$item->tax_total)*100,2) ,
                     'total_excl' => round(($item->total_cost-$item->tax_total),2)
