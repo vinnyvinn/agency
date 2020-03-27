@@ -76,6 +76,10 @@
                                         <label for="rate">Rate Per Unit </label>
                                         <input type="text" required id="rate" name="rate" class="form-control" placeholder="Rate Per Unit">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="buying_price">Buying Price </label>
+                                        <input type="text" required id="buying_price" name="buying_price" class="form-control" placeholder="Buying Price">
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <button class="btn pull-right btn-primary">Add Tariff</button>
