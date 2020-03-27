@@ -1671,30 +1671,30 @@
                                                                                         {{--<th>Action</th>--}}
                                                                                     </tr>
                                                                                     </thead>
+                                                                                    <?php $bp = 0?>
                                                                                     <tbody>
                                                                                     @foreach($dms->quote->services as $service)
+                                                                                        <?php $bp +=(float)$service->buying_price?>
                                                                                         <tr>
                                                                                             <td>{{ ucwords($service->description) }}</td>
                                                                                             <td>{{ number_format($service->total_excl,2)}}</td>
                                                                                             <td>{{ number_format($service->total,2)}}</td>
                                                                                             <td>{{ number_format($service->buying_price,2) }}</td>
-                                                                                            <td class="text-right">{{ $service->buying_price == null ? 'Add Service Cost' : number_format(($service->total - $service->buying_price),2) }}</td>
-                                                                                            {{--<td>--}}
-                                                                                            {{--<button data-toggle="modal" data-target=".bs-example-modal-servicecost" class="btn btn-xs btn-success" data-dismiss="modal">--}}
-                                                                                            {{--<i class="fa fa-pencil"></i>--}}
-                                                                                            {{--</button>--}}
-                                                                                            {{--</td>--}}
                                                                                             <td>{{ number_format($service->gp,2) }}</td>
                                                                                             <td>{{ number_format($service->gp_percentage,2) }}</td>
-                                                                                        </tr>
+                                                                                            <td class="text-right">{{ number_format(($service->total_excl - $service->buying_price),2) }}</td>
+                                                                                            </tr>
                                                                                     @endforeach
                                                                                     </tbody>
                                                                                     <tfoot>
                                                                                     <tr>
-                                                                                        <th colspan="2">Total</th>
+                                                                                        <th colspan="1">Total</th>
+                                                                                        <th>{{ number_format($dms->quote->services->sum('total_excl'), 2) }}</th>
                                                                                         <th>{{ number_format($dms->quote->services->sum('total'), 2) }}</th>
-                                                                                        <th>{{ number_format($dms->quote->services->sum('buying_price'), 2) }}</th>
-                                                                                        <th class="text-right">{{ number_format(($dms->quote->services->sum('total') - $dms->quote->services->sum('buying_price')), 2) }}</th>
+                                                                                        <th>{{ number_format($dms->quote->services->sum('buying_price'), 2)  }}</th>
+                                                                                        <th class="text-right">{{ number_format($dms->quote->services->sum('gp') ,2) }}</th>
+                                                                                        <th class="text-right">{{ number_format($dms->quote->services->sum('gp_percentage') ,2) }}</th>
+                                                                                        <th>{{ number_format((float)$dms->quote->services->sum('total_excl'), 2) - $bp}}</th>
                                                                                     </tr>
                                                                                     </tfoot>
                                                                                 </table>
