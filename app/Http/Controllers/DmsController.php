@@ -244,8 +244,7 @@ class DmsController extends Controller
             'quote.voyage','customer','quote.cargos.consignee','quote.logs'])->findOrFail($id);
         $date = Carbon::now()->format('yy-m-d');
         $bill_header = BillHeader::create([
-            'QUOTE_NO' => $dms->quote->crm_ref,
-            'OPERATION_APP' => 'SL_LTD_GOLIVE',
+            'QUOTE_NO' => $dms->quote->crm_ref, 'OPERATION_APP' => 'SL_LTD_GOLIVE',
             'OPERATION_NO' => $dms->quote->internal_ref,
             'DOC_TYPE' => 'INVOICE',
             'INVOICE_DATE' => $date,
@@ -261,10 +260,11 @@ class DmsController extends Controller
                 'HEADER_ID' => $bill_header->SNo,
                 'ITEM_DESC' => $service->description,
                 'ITEM_QTY' => $service->units,
-                'UNIT_PRICE_EXCL' =>$service->total_excl,
+                'UNIT_PRICE_EXCL' =>round((float)$service->total_excl,2),
                 'VAT' => $service->tax,
                 'UNIT_COST' => round((float)$service->buying_price/(float)$service->units,2),
-                'DOC_TYPE' => 'INVOICE'
+                'DOC_TYPE' => 'INVOICE',
+                'STATUS' => 'UNPOSTED'
             ]);
         }
 
@@ -276,21 +276,16 @@ class DmsController extends Controller
 
         foreach ($dms->quote->cargos as $cargo){
             if ($cargo->consignee != null){
-
                 $proforma = Proforma::with(['services','customer'])->where('consignee_id',$cargo->consignee->id)->get();
 //
             }
         }
 
-        InvNumRepo::init()->makeInvoice($dms,$proforma ? $proforma->first() : '');
-
+        //InvNumRepo::init()->makeInvoice($dms,$proforma ? $proforma->first() : '');
         $quotation = Quotation::findOrFail($dms->quote_id);
-
         $quotation->status = Constants::LEAD_QUOTATION_COMPLETED;
         $quotation->save();
-
         $projectName = ProjectRepo::init()->getProjectNumber($quotation->project_id);
-
         Mail::to(['email'=>'accounts@esl-eastafrica.com'])
             ->cc(['evans@esl-eastafrica.com','accounts@freightwell.com','accounts@sovereignlog.com'])
             ->send(new ProjectInvoice(['message'=>'Project '.$projectName.
@@ -298,7 +293,6 @@ class DmsController extends Controller
 
         $dms->status= 1;
         $dms->save();
-
         NotificationRepo::create()->success('Project completed successfully');
         return redirect()->back();
     }

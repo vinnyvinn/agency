@@ -1668,6 +1668,7 @@
                                                                                         <th>GP Amount</th>
                                                                                         <th>GP %</th>
                                                                                         <th class="text-right">Profit</th>
+                                                                                        <th>Status</th>
                                                                                         {{--<th>Action</th>--}}
                                                                                     </tr>
                                                                                     </thead>
@@ -1683,7 +1684,8 @@
                                                                                             <td>{{ number_format($service->gp,2) }}</td>
                                                                                             <td>{{ number_format($service->gp_percentage,2) }}</td>
                                                                                             <td class="text-right">{{ number_format(($service->total_excl - $service->buying_price),2) }}</td>
-                                                                                            </tr>
+                                                                                             <td>UNPOSTED</td>
+                                                                                        </tr>
                                                                                     @endforeach
                                                                                     </tbody>
                                                                                     <tfoot>
@@ -1695,6 +1697,7 @@
                                                                                         <th class="text-right">{{ number_format($dms->quote->services->sum('gp') ,2) }}</th>
                                                                                         <th class="text-right">{{ number_format($dms->quote->services->sum('gp_percentage') ,2) }}</th>
                                                                                         <th>{{ number_format((float)$dms->quote->services->sum('total_excl'), 2) - $bp}}</th>
+
                                                                                     </tr>
                                                                                     </tfoot>
                                                                                 </table>
