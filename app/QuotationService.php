@@ -16,6 +16,6 @@ class QuotationService extends ESLModel
 
     public function service_item($quotation)
     {
-        return $this->belongsTo(BillDetail::class,'stk_id','ITEM_ID')->where('quotation_id',$quotation)->first();
+     return $this->belongsTo(BillDetail::class,'stk_id','ITEM_ID')->where('DEPT_NAME',$quotation)->first();
     }
 }
