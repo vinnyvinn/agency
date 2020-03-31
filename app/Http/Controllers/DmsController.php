@@ -243,12 +243,29 @@ class DmsController extends Controller
         $dms = BillOfLanding::with(['vessel.vDocs','sof','quote.services',
             'quote.voyage','customer','quote.cargos.consignee','quote.logs'])->findOrFail($id);
         $date = Carbon::now()->format('yy-m-d');
+
+
+        if ($dms->quote->status != Constants::LEAD_QUOTATION_CONVERTED){
+
+            NotificationRepo::create()->error('Complete the PDA before completing this project');
+            redirect()->back();
+        }
+
+        foreach ($dms->quote->cargos as $cargo){
+            if ($cargo->consignee != null){
+                $proforma = Proforma::with(['services','customer'])->where('consignee_id',$cargo->consignee->id)->get();
+//
+            }
+        }
+
+        //InvNumRepo::init()->makeInvoice($dms,$proforma ? $proforma->first() : '');
+        $quotation = Quotation::findOrFail($dms->quote_id);
         $bill_header = BillHeader::create([
             'QUOTE_NO' => $dms->quote->crm_ref, 'OPERATION_APP' => 'SL_LTD_GOLIVE',
             'OPERATION_NO' => $dms->quote->internal_ref,
             'DOC_TYPE' => 'INVOICE',
             'INVOICE_DATE' => $date,
-            'PROJECT_ID' => '',
+            'PROJECT_ID' => $quotation->project_id,
             'CUST_ID' => $dms->Client_id,
             'STATUS' => 'UNPOSTED',
             'SAGE_INV_NO' => ''
@@ -267,22 +284,6 @@ class DmsController extends Controller
                 'STATUS' => 'UNPOSTED'
             ]);
         }
-
-        if ($dms->quote->status != Constants::LEAD_QUOTATION_CONVERTED){
-
-            NotificationRepo::create()->error('Complete the PDA before completing this project');
-            redirect()->back();
-        }
-
-        foreach ($dms->quote->cargos as $cargo){
-            if ($cargo->consignee != null){
-                $proforma = Proforma::with(['services','customer'])->where('consignee_id',$cargo->consignee->id)->get();
-//
-            }
-        }
-
-        //InvNumRepo::init()->makeInvoice($dms,$proforma ? $proforma->first() : '');
-        $quotation = Quotation::findOrFail($dms->quote_id);
         $quotation->status = Constants::LEAD_QUOTATION_COMPLETED;
         $quotation->save();
         $projectName = ProjectRepo::init()->getProjectNumber($quotation->project_id);
