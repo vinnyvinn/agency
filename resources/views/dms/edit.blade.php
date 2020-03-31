@@ -1696,7 +1696,7 @@
                                                                                         <th>{{ number_format($dms->quote->services->sum('buying_price'), 2)  }}</th>
                                                                                         <th class="text-right">{{ number_format($dms->quote->services->sum('gp') ,2) }}</th>
                                                                                         <th class="text-right">{{ number_format($dms->quote->services->sum('gp_percentage') ,2) }}</th>
-                                                                                        <th>{{ number_format((float)$dms->quote->services->sum('total_excl'), 2) - $bp}}</th>
+                                                                                        <th>{{ number_format((float)$dms->quote->services->sum('total_excl') - $bp,2)}}</th>
 
                                                                                     </tr>
                                                                                     </tfoot>
