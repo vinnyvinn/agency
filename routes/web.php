@@ -15,6 +15,8 @@ use App\Mail\ApprovalRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
+
+
 Auth::routes();
 
 //Route::get('/',function(){
@@ -29,7 +31,8 @@ Auth::routes();
 ////    echo "check your mailtrap";
 //
 //});
-
+Route::get('/signin', 'Auth\LoginController@signIn');
+Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/testmail',function(){
     Mail::to(['email'=>'marvincollins14@gmail.com'])
         ->cc(['evans.ngala@esl-eastafrica.com'])

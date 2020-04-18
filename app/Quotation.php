@@ -80,5 +80,8 @@ class Quotation extends ESLModel
     {
         return $this->hasMany(QuotationLog::class,'quotation_id','id');
     }
+    public function client(){
+        return $this->belongsTo(Client::class,'client_id','DCLink');
+    }
 
 }

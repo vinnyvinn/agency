@@ -1281,6 +1281,7 @@
                         'tax_code' : selectedTax.Code,
                         'tax_description' : selectedTax.Description,
                         'tax_id' : selectedTax.idTaxRate,
+                       // 'tax_amount' : ((selectedTax.TaxRate * (parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))) / 100),
                         'tax_amount' : ((selectedTax.TaxRate * (parseFloat(grt_loa) * parseFloat(agency_sp)* parseFloat(serviceUnit))) / 100),
                         'grt_loa' : grt_loa,
                         'rate' : selectedTariff.rate,
@@ -1369,8 +1370,7 @@
                         'tax_code' : selectedTax.Code,
                         'tax_description' : selectedTax.Description,
                         'tax_id' : selectedTax.idTaxRate,
-                        'tax_amount' : ((selectedTax.TaxRate * (parseFloat(grt_loa) *
-                            parseFloat(agency_sp)* parseFloat(serviceUnit))) / 100),
+                        'tax_amount' : ((selectedTax.TaxRate * (parseFloat(grt_loa) *parseFloat(agency_sp)* parseFloat(serviceUnit))) / 100),
                         'grt_loa' : grt_loa,
                         'rate' : selectedTariff.rate,
                         'agency_sp' : agency_sp,

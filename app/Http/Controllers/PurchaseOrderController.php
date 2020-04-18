@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\BillDetail;
+use App\BillHeader;
 use App\BtnLine;
 use App\InvNum;
 use App\PurchaseOrder;
@@ -336,11 +338,37 @@ class PurchaseOrderController extends Controller
 
     public function approvePurchaseOrder($purchase_order_id)
     {
-
         $po = PurchaseOrder::find($purchase_order_id);
-
-        $invnum_id = $this->makeInvoice($po);
-        $po->invnum_id = $invnum_id;
+        $quote = Quotation::find($po->quotation_id);
+        $date = Carbon::now()->format('yy-m-d');
+        $bill_header = BillHeader::create([
+            'QUOTE_NO' => $quote->crm_ref,
+            'OPERATION_APP' => env('DB_DATABASE_2'),
+            'OPERATION_NO' => $quote->internal_ref,
+            'DOC_TYPE' => 'PURCHASE ORDER',
+            'INVOICE_DATE' => $date,
+            'PROJECT_ID' => $quote->project_int,
+            'CUST_ID' => $quote->DCLink,
+            'STATUS' => 'UNPOSTED',
+            'SAGE_INV_NO' => ''
+        ]);
+        foreach ($po->polines as $service){
+            $bill_details = BillDetail::create([
+                'DEPT_NAME' => 'FORWARDING',
+                'ITEM_ID' => $service->stock_link,
+                'HEADER_ID' => $bill_header->SNo,
+                'ITEM_DESC' => $service->name,
+                'ITEM_QTY' => $service->qty,
+                'UNIT_PRICE_EXCL' =>round((float)$service->rate,2),
+                'VAT' => $service->tax,
+                'UNIT_COST' => round((float)$service->rate,2),
+                'DOC_TYPE' => 'INVOICE',
+                'STATUS' => 'UNPOSTED',
+                'AP_ID' => $po->supplier_id
+            ]);
+        }
+       // $invnum_id = $this->makeInvoice($po);
+      //  $po->invnum_id = $invnum_id;
         $po->status = Constants::PO_APPROVED;
         $po->approved_by = Auth::id();
         $po->save();

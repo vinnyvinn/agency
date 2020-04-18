@@ -47,7 +47,6 @@ class DmsController extends Controller
     public function edit($id)
          {
 
-
         $dms = BillOfLanding::with(['vessel.vDocs','sof','quote.services',
             'quote.voyage','customer','quote.cargos.consignee','quote.logs','quote.pettyCash'])->findOrFail($id);
 
@@ -238,9 +237,7 @@ class DmsController extends Controller
 
     public function complete($id)
     {
-
-
-        $dms = BillOfLanding::with(['vessel.vDocs','sof','quote.services',
+      $dms = BillOfLanding::with(['vessel.vDocs','sof','quote.services',
             'quote.voyage','customer','quote.cargos.consignee','quote.logs'])->findOrFail($id);
         $date = Carbon::now()->format('yy-m-d');
 
@@ -250,7 +247,6 @@ class DmsController extends Controller
             NotificationRepo::create()->error('Complete the PDA before completing this project');
             redirect()->back();
         }
-
         foreach ($dms->quote->cargos as $cargo){
             if ($cargo->consignee != null){
                 $proforma = Proforma::with(['services','customer'])->where('consignee_id',$cargo->consignee->id)->get();
@@ -278,7 +274,7 @@ class DmsController extends Controller
                 'ITEM_DESC' => $service->description,
                 'ITEM_QTY' => $service->units,
                 'UNIT_PRICE_EXCL' =>round((float)$service->total_excl,2),
-                'VAT' => $service->tax,
+                'VAT' => $service->tax_amount,
                 'UNIT_COST' => round((float)$service->buying_price/(float)$service->units,2),
                 'DOC_TYPE' => 'INVOICE',
                 'STATUS' => 'UNPOSTED'
@@ -338,9 +334,10 @@ class DmsController extends Controller
         $dms->update($data);
 
         $project_id = ProjectRepo::init()->generateName(str_replace("MV ","",$dms->vessel->name),$dms->vessel->imo_number)->makeProject();
-
+       // $project_id = ProjectRepo::init()->makeProject();
+     //    dd($project_id);
         $quote = Quotation::findOrFail($dms->quote_id);
-        $quote->project_id = $project_id;
+        $quote->project_id = $project_id->ProjectLink;
         $quote->save();
 
         NotificationRepo::create()->message('PDA updated successfully','PDA Update');
@@ -364,7 +361,6 @@ class DmsController extends Controller
         }
 
         $port_stay = ceil($dms->quote->cargos->sum('weight')/$dms->quote->cargos->first()->discharge_rate);
-
         $laytime = [];
         $lowerpart['timeallowed'] = $this->getTimeDeatils($dms->time_allowed);
 
@@ -372,10 +368,8 @@ class DmsController extends Controller
             NotificationRepo::create()->message('Add SOF data before you generate SOF','No SOF');
             return back();
         }
-
         foreach ($dms->sof->sortBy('to') as $sof){
 //            if ($sof->action == 'calculate') {
-
                 array_push($laytime, [
                     'day' => Carbon::parse($sof->to)->format('l'),
                     'date' => Carbon::parse($sof->from)->format('d-M-y'),

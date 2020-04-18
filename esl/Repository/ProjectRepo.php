@@ -77,7 +77,7 @@ class ProjectRepo
             ->send(new ProjectInvoice(['message'=>'Project '.$this->projectName.
                 ' has been created by '. ucwords(Auth::user()->name) . ' on '.Carbon::now()->format('d-M-y H:m'). '. Kindly prepare in advance '],'PROJECT '. $this->projectName . ' CREATED'));
 
-        Project::create([
+        $project = Project::create([
                 'ProjectName' => $this->projectName,
                 'ProjectCode' => $this->projectName,
                 'ActiveProject' => 1,
@@ -96,5 +96,6 @@ class ProjectRepo
                 'Project_iBranchID' => 0
             ]
         );
+        return $project;
     }
 }

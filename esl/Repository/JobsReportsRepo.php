@@ -73,9 +73,10 @@ public function getJobs($from,$to,$status)
 
         foreach ($pdas as $pda){
             $data[]=[
-                'Customer' => ucfirst($pda->lead->name),
-                'Contact Person' => ucfirst($pda->lead->contact_person),
-                'Email' => $pda->lead->email,
+                'Reference #' => $pda->internal_ref,
+                'CRM Ref#' => $pda->crm_ref,
+                'Customer' => ucfirst($pda->client->Name),
+                'Contact Person' => ucfirst($pda->client->Contact_Person),
                 'Vessel Name' => $pda->vessel->name ,
                 'Status' => ucfirst($pda->status),
                 'Created' => \Carbon\Carbon::parse($pda->created_at)->format('d-M-y')

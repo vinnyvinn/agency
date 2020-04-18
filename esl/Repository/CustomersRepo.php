@@ -19,7 +19,7 @@ class CustomersRepo
 {
     public static function customerInit()
     {
-        return new self();
+     return new self();
     }
 
     public function searchCustomers($searchItem, $table)

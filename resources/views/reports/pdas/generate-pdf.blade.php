@@ -13,9 +13,10 @@
                             <table class="table table-striped tbl-agency" id="customers">
                                 <thead>
                                 <tr>
+                                    <th>Reference #</th>
+                                    <th>CRM Ref#</th>
                                     <th>Customer</th>
                                     <th>Contact Person</th>
-                                    <th>Email</th>
                                     <th>Vessel Name</th>
                                     <th>Status</th>
                                     <th>Created</th>
@@ -25,9 +26,10 @@
                                 <tbody>
                                 @foreach($pdas as $pda)
                                     <tr>
-                                        <td>{{ ucfirst($pda->lead->name) }}</td>
-                                        <td>{{ ucfirst($pda->lead->contact_person) }}</td>
-                                        <td>{{ $pda->lead->email }}</td>
+                                        <td>{{ $pda->internal_ref}}</td>
+                                        <td>{{ $pda->crm_ref }}</td>
+                                        <td>{{ $pda->client->Name }}</td>
+                                        <td>{{ $pda->client->Contact_Person }}</td>
                                         <td>{{$pda->vessel->name}}</td>
                                         <td>{{ucfirst($pda->status)}}</td>
                                         <td>{{ \Carbon\Carbon::parse($pda->created_at)->format('d-M-y') }}</td>

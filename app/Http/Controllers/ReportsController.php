@@ -6,6 +6,7 @@ use App\BillOfLanding;
 use App\Lead;
 use App\PurchaseOrder;
 use App\Quotation;
+use Carbon\Carbon;
 use Esl\Repository\JobsReportsRepo;
 use Illuminate\Http\Request;
 use Excel;
@@ -44,14 +45,16 @@ class ReportsController extends Controller
     {
         $status = $request->get('status');
         $jobs = '';
+        $d1 = Carbon::parse(request()->get('from'))->format('Y-m-d');
+        $d2 = Carbon::parse(request()->get('to'))->format('Y-m-d');
         if ($status=='all') {
-            $jobs = BillOfLanding::whereBetween('created_at', [$request->get('from'), $request->get('to')])->get();
+            $jobs = BillOfLanding::whereBetween('created_at', [$d1, $d2])->get();
         }
         if ($status=='active'){
-            $jobs = BillOfLanding::where('status',0)->whereBetween('created_at', [$request->get('from'), $request->get('to')])->get();
+            $jobs = BillOfLanding::where('status',0)->whereBetween('created_at', [$d1, $d2])->get();
         }
         if ($status=='completed'){
-            $jobs = BillOfLanding::where('status',1)->whereBetween('created_at', [$request->get('from'), $request->get('to')])->get();
+            $jobs = BillOfLanding::where('status',1)->whereBetween('created_at', [$d1, $d2])->get();
         }
         $from = date('d-m-Y',strtotime($request->get('from')));
         $to = date('d-m-Y',strtotime($request->get('to')));
@@ -63,8 +66,8 @@ class ReportsController extends Controller
     public function exportPDF($from,$to,$status,$type)
 
     {
-        $date_from = date('m/d/Y',strtotime($from));
-        $date_to = date('m/d/Y',strtotime($to));
+        $date_from = date('Y-m-d',strtotime($from));
+        $date_to = date('Y-m-d',strtotime($to));
         $jobs = '';
         if ($status=='all') {
             $jobs = BillOfLanding::whereBetween('created_at', [$date_from, $date_to])->get();
@@ -105,7 +108,9 @@ class ReportsController extends Controller
 
     public function getLeads()
     {
-        $leads = Lead::whereBetween('created_at', [request()->get('from'), request()->get('to')])->get();
+        $d1 = Carbon::parse(request()->get('from'))->format('Y-m-d');
+        $d2 = Carbon::parse(request()->get('to'))->format('Y-m-d');
+        $leads = Lead::whereBetween('created_at', [$d1, $d2])->get();
         $from = date('d-m-Y',strtotime(request()->get('from')));
         $to = date('d-m-Y',strtotime(request()->get('to')));
         return view('reports.leads.index')->with('leads', $leads)->with('from',$from)->with('to',$to);
@@ -113,8 +118,8 @@ class ReportsController extends Controller
 
     public function exportLead($from,$to,$type)
     {
-        $date_from = date('m/d/Y',strtotime($from));
-        $date_to = date('m/d/Y',strtotime($to));
+        $date_from = date('Y-m-d',strtotime($from));
+        $date_to = date('Y-m-d',strtotime($to));
 
         if ($type !='pdf') {
             return $this->downloadLeads($date_from, $date_to,$type);
@@ -146,16 +151,20 @@ class ReportsController extends Controller
 
     public function getPdas()
     {
-        $pdas = Quotation::where('status','!=','converted')->whereBetween('created_at', [request()->get('from'), request()->get('to')])->get();
+       // $pdas = Quotation::where('status','!=','converted')->whereBetween('created_at', [request()->get('from'), request()->get('to')])->get();
+        $d1 = Carbon::parse(request()->get('from'))->format('Y-m-d');
+        $d2 = Carbon::parse(request()->get('to'))->format('Y-m-d');
+        $pdas = Quotation::where('status','!=','converted')->whereBetween('created_at', [$d1, $d2])->get();
         $from = date('d-m-Y',strtotime(request()->get('from')));
         $to = date('d-m-Y',strtotime(request()->get('to')));
+
         return view('reports.pdas.index')->with('pdas', $pdas)->with('from',$from)->with('to',$to);
     }
 
     public function exportPda($from,$to,$type)
     {
-        $date_from = date('m/d/Y',strtotime($from));
-        $date_to = date('m/d/Y',strtotime($to));
+        $date_from = date('Y-m-d',strtotime($from));
+        $date_to = date('Y-m-d',strtotime($to));
         $pdas = Quotation::where('status','!=','converted')->whereBetween('created_at', [$date_from, $date_to])->get();
 
         if ($type !='pdf') {
@@ -189,11 +198,13 @@ class ReportsController extends Controller
     {
         $status = request()->get('status');
         $pos = '';
+        $d1 = Carbon::parse(request()->get('from'))->format('Y-m-d');
+        $d2 = Carbon::parse(request()->get('to'))->format('Y-m-d');
         if ($status=='requested'){
-            $pos = PurchaseOrder::where('status','requested')->whereBetween('created_at', [request()->get('from'), request()->get('to')])->get();
+            $pos = PurchaseOrder::where('status','requested')->whereBetween('created_at', [$d1, $d2])->get();
         }
         elseif ($status=='approved'){
-            $pos = PurchaseOrder::where('status','approved')->whereBetween('created_at', [request()->get('from'), request()->get('to')])->get();
+            $pos = PurchaseOrder::where('status','approved')->whereBetween('created_at', [$d1, $d2])->get();
         }
 
         $from = date('d-m-Y',strtotime(request()->get('from')));
@@ -203,8 +214,8 @@ class ReportsController extends Controller
 
     public function exportPo($from,$to,$status,$type)
     {
-        $date_from = date('m/d/Y',strtotime($from));
-        $date_to = date('m/d/Y',strtotime($to));
+        $date_from = date('Y-m-d',strtotime($from));
+        $date_to = date('Y-m-d',strtotime($to));
         $pos = '';
         if ($status=='requested'){
             $pos = PurchaseOrder::where('status','requested')->whereBetween('created_at', [$date_from, $date_to])->get();
