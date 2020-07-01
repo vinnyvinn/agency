@@ -48,11 +48,11 @@
                                                     <td><strong>BL NUMBER </strong></td>
                                                     <td>{{ucwords($data[2]['bl'])}}</td>
                                                 </tr><tr>
-                                                    <td><strong>SUPPLIER </strong></td>
+                                                    <td><strong>SUPPLIER / TRADER</strong></td>
                                                     <td>{{ ucwords($data[2]['supplier']) }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td><strong>Consignee </strong></td>
+                                                    <td><strong>CARGO RECEIVER / CONSIGNEE </strong></td>
                                                     <td>{{ ucwords($data[2]['consignee']) }}</td>
                                                 </tr><tr>
                                                     <td><strong>CARGO TYPE</strong></td>
@@ -141,10 +141,14 @@
                                                 <th colspan="4" class="text-center">
                                                     <strong >TIME ALLOWED</strong>
                                                 </th>
-                                                <th>{{ explode(',',$data[0]['timeallowed'])[0]}}</th>
-                                                <th>{{ explode(',',$data[0]['timeallowed'])[1]}}</th>
-                                                <th>{{ explode(',',$data[0]['timeallowed'])[2]}}</th>
-                                                <th>{{ explode(',',$data[0]['timeallowed'])[3]}}</th>
+                                                <th>1</th>
+                                                <th>2</th>
+                                                <th>3</th>
+                                                <th>4</th>
+{{--                                                <th>{{ explode(',',$data[0]['timeallowed'])[0]}}</th>--}}
+{{--                                                <th>{{ explode(',',$data[0]['timeallowed'])[1]}}</th>--}}
+{{--                                                <th>{{ explode(',',$data[0]['timeallowed'])[2]}}</th>--}}
+{{--                                                <th>{{ explode(',',$data[0]['timeallowed'])[3]}}</th>--}}
                                                 <th colspan="2"></th>
                                             </tr>
                                             <tr style="background-color: #ff6600 !important;">

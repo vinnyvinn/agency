@@ -141,7 +141,7 @@
                 data:{email:getCookie("auth_email")},
                 success:function (res) {
                     if(res ==='successful'){
-                        window.location.href="/";
+                     window.location.href="/";
                     }
                     else if(res ==='error'){
                         window.location.href=DASHBOARD_URL+"/login";
@@ -164,7 +164,7 @@
         var ca = decodedCookie.split(';');
         for(var i = 0; i < ca.length; i++) {
             var c = ca[i];
-            while (c.charAt(0) == ' ') {
+            while (c.charAt(0) == '') {
                 c = c.substring(1);
             }
             if (c.indexOf(name) == 0) {

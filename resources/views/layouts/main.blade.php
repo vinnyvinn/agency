@@ -10,6 +10,7 @@
     <meta name="author" content="">
     {{--<link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">--}}
     <title>ESL</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/plugins/chartist-js/dist/chartist.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/plugins/chartist-js/dist/chartist-init.css') }}" rel="stylesheet">
@@ -20,7 +21,10 @@
     <link href="{{ asset('assets/plugins/wizard/steps.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-timepicker.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-
+    <script type="text/javascript"><!--
+        var url = '{{ url("/") }}';
+        var app_url = '{{ env("APP_URL") }}';
+        //--></script>
     <style>
         .select2{
             width: 100% !important;
@@ -58,15 +62,17 @@
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
 </div>
 <div id="main-wrapper">
+
     @include('partials.header')
     @include('partials.nav-bar')
     <div class="page-wrapper">
-
+        <div id="app">
         @yield('content')
-
+        </div>
         <footer class="footer"> © {{ Date('Y') }} ESL</footer>
     </div>
-</div>
+    </div>
+<script src="{{ asset('js/app.js') }}" type="text/JavaScript"></script>
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bootstrap/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
@@ -183,6 +189,8 @@
 
      $(document).ready(function() {
          $('.tbl-agency').DataTable();
+
+
      } );
 
 

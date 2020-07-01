@@ -24,6 +24,7 @@ class CreateCargosTable extends Migration
             $table->string('description')->nullable();
             $table->string('type')->nullable();
             $table->string('bl_no')->nullable();
+            $table->string('bl_qty')->nullable();
             $table->string('seal_no')->nullallable();
             $table->string('hs_no')->nullallable();
             $table->string('container_id')->nullable();
@@ -37,7 +38,9 @@ class CreateCargosTable extends Migration
             $table->string('weight');
             $table->string('total_package')->nullable();
             $table->string('discharge_rate');
+            $table->float('commited_discharge_rate');
             $table->text('shipper')->nullable();
+            $table->text('ship_owner')->nullable();
             $table->text('shipping_line')->nullable();
             $table->text('notifying_address')->nullable();
             $table->text('remarks')->nullable();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\BillOfLanding;
+use App\Client;
 use App\ContainerType;
 use App\ExtraService;
 use App\GoodType;
@@ -30,6 +31,7 @@ class QuotationController extends Controller
 {
     public function showQuotation($id)
     {
+
         $quote = Quotation::with([
             'lead', 'parties', 'cargos.goodType', 'cargos.consignee',
             'vessel', 'voyage', 'services.tariff', 'remarks.user', 'services' => function ($query) {
@@ -348,6 +350,7 @@ class QuotationController extends Controller
 
     public function allPdas()
     {
+        //dd(Client::first());
         return view('quotation.pdas')
             ->withPdas(Quotation::with([
                 'lead', 'parties', 'cargos.goodType', 'consignee',

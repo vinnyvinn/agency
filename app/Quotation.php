@@ -30,7 +30,8 @@ class Quotation extends ESLModel
 
     public function lead()
     {
-        return $this->hasOne(Client::class, 'DCLink','client_id');
+     //   return $this->hasOne(Client::class, 'DCLink','client_id');
+        return $this->belongsTo(Client::class,'client_id','DCLink');
     }
 
     public function services()

@@ -24,9 +24,10 @@
                         <div class="card-body">
                             <!-- Row -->
                             <div class="row">
-                                  <a href="{{ url('/all-pdas') }}" class="btn btn-primary">Quotations</a><br>
+                                  <a href="{{ url('/all-pdas') }}" class="btn btn-primary" style="margin-left: 20px">Quotations</a><br>
                                   <div class="tab-pane  p-20" id="profile" role="tabpanel" style="display: none;">
                                             {{--@if(count($quotation->cargos) < 1)--}}
+
                                             <button class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lgcargo">Quotation</button>
                                             {{--@endif--}}
                                                 <div class="modal fade bs-example-modal-lgcargo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
@@ -64,11 +65,11 @@
                                                                   </form>
                                                                           </div>
                                                                             </div>
-                                                                          
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                          
+
                                         </div>
                             </div>
                         </div>
@@ -122,7 +123,7 @@
             </div>
         @endcan
         @can('manage-leads')
-                <div class="row">
+                <div class="row" style="display: none">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
@@ -204,12 +205,12 @@
              $('.list_templates').show()
              $('.template_name').hide()
             }
-            
+
             else{
              $('.list_templates').hide()
              $('.template_name').hide()
             }
-           
+
         })
     })
 

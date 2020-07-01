@@ -25,6 +25,7 @@ class CreateBillOfLandingsTable extends Migration
             $table->string('stage')->nullable();
             $table->dateTime('laytime_start')->nullable();
             $table->string('time_allowed')->nullable();
+            $table->string('turn_time_allowed')->nullable();
             $table->string('seal_number')->nullable();
             $table->string('berth_number')->nullable();
             $table->string('place_of_receipt')->nullable();

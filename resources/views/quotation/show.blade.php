@@ -233,21 +233,28 @@
                                                                                 <input type="text" id="hs_no" name="hs_no" class="form-control" placeholder="HS Number">
                                                                             </div>
                                                                             <div class="form-group">
+                                                                                <label for="ship_owner">SHIP OWNER / DISPONENT OWNER</label>
+                                                                                <input type="text" id="ship_owner" name="ship_owner" class="form-control" placeholder="Ship Owner">
+                                                                            </div>
+                                                                            <div class="form-group">
                                                                                 <label for="shipper">Shipper Details</label>
                                                                                 <textarea name="shipper" cols="30" rows="5" class="form-control" id="shipper" placeholder="Shipper Details"></textarea>
                                                                             </div>
 
-
-                                                                        </div>
-                                                                        <div class="col-sm-6">
                                                                             <div class="form-group">
                                                                                 <label for="discharge_rate">Cargo Quantity (MT)</label>
                                                                                 <input type="number" id="weight" name="weight" value="" required class="form-control weight" placeholder="Cargo Quantity (MT)">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="discharge_rate">Discharge Rate</label>
-                                                                                <input type="number" id="discharge_rate" name="discharge_rate" value="" required class="form-control discharge_rate" placeholder="Discharge Rate">
+                                                                                <label for="discharge_rate">Customary Discharge Rate</label>
+                                                                                <input type="number" id="discharge_rate" name="discharge_rate" value="" required class="form-control discharge_rate" placeholder="Customary Discharge Rate">
                                                                             </div>
+                                                                            <div class="form-group">
+                                                                                <label for="commited_discharge_rate">COMMITED DISCHARGE AS PER CONTRACT</label>
+                                                                                <input type="number" id="commited_discharge_rate" name="commited_discharge_rate" value="" required class="form-control" placeholder="COMMITED DISCHARGE AS PER CONTRACT">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
 
                                                                             <div class="form-group">
                                                                                 <label for="total_package">Total Number of Package in Words</label>
@@ -256,6 +263,10 @@
                                                                             <div class="form-group">
                                                                                 <label for="bl_no">BL NO</label>
                                                                                 <input type="text" id="bl_no" name="bl_no" value="" required class="form-control">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="bl_qty">BL Quantity</label>
+                                                                                <input type="text" id="bl_qty" name="bl_qty" value="" required class="form-control">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="consignee_name">Consignee Name</label>
@@ -979,55 +990,55 @@
         });
 
         $(document).ready(function() {
-            $('.service_units').on('keyup',function(){        
-               if($(this).val() < 1){            
-               $(this).val(1);            
+            $('.service_units').on('keyup',function(){
+               if($(this).val() < 1){
+               $(this).val(1);
                }
             })
 
-            $('.service_units').on('click',function(){          
-               if($(this).val() < 1){          
-               $(this).val(1);          
+            $('.service_units').on('click',function(){
+               if($(this).val() < 1){
+               $(this).val(1);
                }
             })
 
-             $('.agency_sp').on('keyup',function(){        
-               if($(this).val() < 1){            
-               $(this).val(1);            
+             $('.agency_sp').on('keyup',function(){
+               if($(this).val() < 1){
+               $(this).val(1);
                }
             })
 
-            $('.agency_sp').on('click',function(){          
-               if($(this).val() < 1){          
-               $(this).val(1);          
+            $('.agency_sp').on('click',function(){
+               if($(this).val() < 1){
+               $(this).val(1);
                }
             })
 
 
-             $('.discharge_rate').on('keyup',function(){        
-               if($(this).val() < 1){            
-               $(this).val(1);            
+             $('.discharge_rate').on('keyup',function(){
+               if($(this).val() < 1){
+               $(this).val(1);
                }
             })
 
-            $('.discharge_rate').on('click',function(){          
-               if($(this).val() < 1){          
-               $(this).val(1);          
+            $('.discharge_rate').on('click',function(){
+               if($(this).val() < 1){
+               $(this).val(1);
                }
             })
 
-            $('.weight').on('keyup',function(){        
-               if($(this).val() < 1){            
-               $(this).val(1);            
+            $('.weight').on('keyup',function(){
+               if($(this).val() < 1){
+               $(this).val(1);
                }
             })
 
-            $('.weight').on('click',function(){          
-               if($(this).val() < 1){          
-               $(this).val(1);          
+            $('.weight').on('click',function(){
+               if($(this).val() < 1){
+               $(this).val(1);
                }
             })
-        
+
         //discharge_rate
         //agency_sp
             if ($("#mymce").length > 0) {

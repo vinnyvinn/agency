@@ -43,6 +43,7 @@ Route::get('/testmail',function(){
     echo "check your mailtrap";
 
 });
+Route::get('/', 'HomeController@dashboard');
 Route::get('/quotation/preview/{id}', 'QuotationController@previewQuotation');
 Route::get('/quotation/download/{id}', 'QuotationController@downloadQuotation');
 Route::get('/proforma/download/{id}', 'ProformaController@downloadProforma');
@@ -52,12 +53,12 @@ Route::get('/view-po/{purchase_order_id}', 'PurchaseOrderController@showPurchase
 
 
 Route::group(['middleware' => ['auth']], function (){
-    //    po
+    //po
     Route::get('/generate-po/{quotation_id}', 'PurchaseOrderController@generatePo');
     Route::get('/approve-po/{purchase_order_id}', 'PurchaseOrderController@approvePurchaseOrder');
     Route::get('/disapprove-po/{purchase_order_id}', 'PurchaseOrderController@disapprovePurchaseOrder');
 
-    Route::get('/', 'HomeController@dashboard');
+   // Route::get('/', 'HomeController@dashboard');
     Route::resource('/customers', 'CustomerController');
     Route::resource('/manage-users', 'ManageController');
     Route::get('/create-role', 'ManageController@createRole');
