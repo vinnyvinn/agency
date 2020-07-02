@@ -1,4 +1,5 @@
 @extends('layouts.main')
+
 @section('content')
     <div class="row page-titles m-b-0">
         <div class="col-md-5 align-self-center">
@@ -74,6 +75,15 @@
                                                             <input type="text" required id="laytime_time" name="laytime_time" class="timepicker1 form-control">
                                                         </div>
 
+                                                        <div class="form-group">
+                                                            <label for="job_type_id">Job Type</label>
+                                                            <select name="job_type_id" id="job_type_id" class="form-control" required>
+                                                                <option value="">Select Job Type</option>
+                                                                <option value="1">CHARTER AGENCY WORK</option>
+                                                                <option value="2">LINER</option>
+                                                                <option value="3">OPA - OWNER PROTECTIVE AGENTS</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">

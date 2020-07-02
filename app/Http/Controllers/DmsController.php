@@ -112,6 +112,7 @@ class DmsController extends Controller
 
     public function store(Request $request)
     {
+
         $data = [];
 
         if ($request->has('checklist')){
@@ -338,6 +339,7 @@ class DmsController extends Controller
      //    dd($project_id);
         $quote = Quotation::findOrFail($dms->quote_id);
         $quote->project_id = $project_id->ProjectLink;
+        $quote->job_type_id = $request['job_type_id'];
         $quote->save();
 
         NotificationRepo::create()->message('PDA updated successfully','PDA Update');
