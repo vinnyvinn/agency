@@ -35,13 +35,23 @@
                                             @foreach(\App\ExtraServiceType::all() as $value)
                                                 <option value="{{$value->id}}">{{$value->name}}</option>
                                                 @endforeach
-                                        </select></div>
+                                        </select>
+                                    </div>
                                 </div>
 
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="description">Description</label>
                                             <input type="text" required id="description" name="description" class="form-control" placeholder="Description">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="job_type_id">Job Type</label>
+                                            <select name="job_type_id" id="job_type_id" class="form-control" required>
+                                                <option value="">Select Job Type</option>
+                                                <option value="1">CHARTER AGENCY WORK</option>
+                                                <option value="2">LINER</option>
+                                                <option value="3">OPA - OWNER PROTECTIVE AGENTS</option>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <br>
