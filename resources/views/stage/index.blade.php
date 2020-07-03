@@ -27,7 +27,8 @@
                                 <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Type</th>
+                                    <th>Category</th>
+                                    <th>Job type</th>
                                     <th>Description</th>
                                     <th>Created</th>
                                     <th class="text-right">Action</th>
@@ -35,9 +36,22 @@
                                 </thead>
                                 <tbody id="customers">
                                 @foreach($stages as $stage)
+
                                     <tr>
                                         <td>{{ ucwords($stage->name) }}</td>
                                         <td>{{ ucfirst($stage->service ==0 ? 'General' : \App\ExtraServiceType::findOrFail($stage->service)->name) }}</td>
+                                        <td>
+                                            @if($stage->job_type_id==1)
+                                              <?php echo 'CHARTER AGENCY WORK'?>
+                                            @endif
+                                                @if($stage->job_type_id==2)
+                                                    <?php echo 'LINER'?>
+                                                @endif
+                                                @if($stage->job_type_id==3)
+                                                    <?php echo 'OPA - OWNER PROTECTIVE AGENTS'?>
+                                                @endif
+
+                                        </td>
                                         <td>{{ ucfirst($stage->description) }}</td>
                                         <td>{{ \Carbon\Carbon::parse($stage->created_at)->format('d-M-y') }}</td>
                                         <td class="text-right">

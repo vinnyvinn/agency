@@ -131,46 +131,46 @@
 
 </html>
 
-{{--<script>--}}
-{{--    const DASHBOARD_URL ='{{env('DASHBOARD_URL')}}' ;--}}
-{{--    $(function(){--}}
-{{--        if(getCookie("auth_email")){--}}
-{{--            $.ajax({--}}
-{{--                url:'/signin',--}}
-{{--                method:'GET',--}}
-{{--                data:{email:getCookie("auth_email")},--}}
-{{--                success:function (res) {--}}
-{{--                    if(res ==='successful'){--}}
-{{--                     window.location.href="/";--}}
-{{--                    }--}}
-{{--                    else if(res ==='error'){--}}
-{{--                        window.location.href=DASHBOARD_URL+"/login";--}}
-{{--                    }--}}
-{{--                    else{--}}
-{{--                        toastr.error('Sorry,User Email '+getCookie("auth_email")+' does not exists')--}}
-{{--                        setTimeout(()=>{--}}
-{{--                            window.location.href=DASHBOARD_URL+"/login";--}}
-{{--                        },1500)--}}
-{{--                    }--}}
-{{--                }--}}
-{{--            })--}}
-{{--        }else{--}}
-{{--            window.location.href=DASHBOARD_URL+"/login";--}}
-{{--        }--}}
-{{--    })--}}
-{{--    function getCookie(cname) {--}}
-{{--        var name = cname + "=";--}}
-{{--        var decodedCookie = decodeURIComponent(document.cookie);--}}
-{{--        var ca = decodedCookie.split(';');--}}
-{{--        for(var i = 0; i < ca.length; i++) {--}}
-{{--            var c = ca[i];--}}
-{{--            while (c.charAt(0) == '') {--}}
-{{--                c = c.substring(1);--}}
-{{--            }--}}
-{{--            if (c.indexOf(name) == 0) {--}}
-{{--                return c.substring(name.length, c.length);--}}
-{{--            }--}}
-{{--        }--}}
-{{--        return "";--}}
-{{--    }--}}
-{{--</script>--}}
+<script>
+    const DASHBOARD_URL ='{{env('DASHBOARD_URL')}}' ;
+    $(function(){
+        if(getCookie("auth_email")){
+            $.ajax({
+                url:'/signin',
+                method:'GET',
+                data:{email:getCookie("auth_email")},
+                success:function (res) {
+                    if(res ==='successful'){
+                     window.location.href="/";
+                    }
+                    else if(res ==='error'){
+                        window.location.href=DASHBOARD_URL+"/login";
+                    }
+                    else{
+                        toastr.error('Sorry,User Email '+getCookie("auth_email")+' does not exists')
+                        setTimeout(()=>{
+                            window.location.href=DASHBOARD_URL+"/login";
+                        },1500)
+                    }
+                }
+            })
+        }else{
+            window.location.href=DASHBOARD_URL+"/login";
+        }
+    })
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == '') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+</script>
