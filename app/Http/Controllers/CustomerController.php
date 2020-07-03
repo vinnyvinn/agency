@@ -233,8 +233,8 @@ class CustomerController extends Controller
 //            return Response(['success' => ['redirect' => url('/quotation/'.$request->quote_id)]]);
 //        }
 //        else{
-            $vessel = Vessel::create($request->except('quotation_id'));
-            Quotation::find($request->quotation_id)->update(['user_id'=>Auth::user()->id,'vessel_id' =>$vessel->id]);
+            $vessel = Vessel::create($request->except(['quotation_id','job_type_id']));
+            Quotation::find($request->quotation_id)->update(['user_id'=>Auth::user()->id,'vessel_id' =>$vessel->id,'job_type_id'=>$request->job_type_id]);
             NotificationRepo::create()->success('Quotation generated successfully');
             return Response(['success' => ['redirect' => url('/quotation/'.$request->quotation_id)]]);
        // }

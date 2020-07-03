@@ -14,6 +14,7 @@ use App\Proforma;
 use App\Quotation;
 use App\Sof;
 use App\Stage;
+use App\StkItem;
 use App\Vessel;
 use App\VoucherType;
 use App\Voyage;
@@ -94,13 +95,14 @@ class DmsController extends Controller
                 ->withUpdate($update)
                 ->withStages(Stage::with(['components'])->where('service',$dms->service_type_id)->get());
         }
-
+//dd($stageids);
         return view('dms.edit')
             ->withDms($dms)
             ->withStageids($stageids)
+            ->withProjects(Project::all())
             ->withChecklist($checklist->groupBy('title'))
             ->withUpdate($update)->with('payment_types',VoucherType::where('fk_iVoucherMaster',1)->get())
-            ->withStages(Stage::with(['components'])->get());
+            ->withStages(Stage::with(['components'])->where('job_type_id',$dms->quote->job_type_id)->get());
 //            ->withStages(Stage::with(['components'])->where('service',0)->get());
     }
 
@@ -257,6 +259,7 @@ class DmsController extends Controller
 
         //InvNumRepo::init()->makeInvoice($dms,$proforma ? $proforma->first() : '');
         $quotation = Quotation::findOrFail($dms->quote_id);
+
         $bill_header = BillHeader::create([
             'QUOTE_NO' => $dms->quote->crm_ref,
             'OPERATION_APP' =>  env('DB_DATABASE_2'),
@@ -267,31 +270,16 @@ class DmsController extends Controller
             'CUST_ID' => $dms->Client_id,
             'STATUS' => 'UNPOSTED',
             'SAGE_INV_NO' => '',
-            'FILE_REF_NO' => $dms->file_number,
-            'CONSIGNEE_NAME' => $quotation->cargo->consignee_name,
-            'CARGO_DETAILS' => $quotation->cargo->cargo_name,
-            'BL_NO' => $quotation->cargo->bl_no,
-            'QTY' => $quotation->cargo->cargo_qty,
-            'VESSEL' => $quotation->cargo->vessel_name,
+            'FILE_REF_NO' => $dms->quote->file_number,
+            'CONSIGNEE_NAME' => $quotation->consignee->consignee_name,
+            'CARGO_DETAILS' => $quotation->cargos->first()->description,
+            'BL_NO' => $quotation->cargos->first()->bl_no,
+            'QTY' => $quotation->cargos->first()->bl_qty,
+            'VESSEL' => $quotation->vessel->name,
 
         ]);
-      //  $bill_header->CUST_ID = $quotation->customer->DCLink;
-      //  $bill_header->FILE_REF_NO = $quotation->file_ref_no;
-       // $bill_header->CONSIGNEE_NAME = $quotation->cargo->description;
-        //$bill_header->INVOICE_DATE = Carbon::parse($quotation->invoice_date)->format('Y-m-d');
-//        $bill_header->INVOICE_DATE = Carbon::parse($quotation->created_at)->format('Y-m-d');
-       // $bill_header->OPERATION_APP = env('DB_DATABASE_2');
-       // $bill_header->OPERATION_NO = $quotation->reference_no;
-       /// $bill_header->PROJECT_ID = $quotation->project_int;
-        //$bill_header->QUOTE_NO = $quotation->crm_est_id;
-        //$bill_header->CARGO_DETAILS = $quotation->cargo->description;
-     //   $bill_header->BL_NO = $quotation->dms->bl_number;
-//        $bill_header->WEIGHT = $quotation->cargo->;
-     //   $bill_header->VESSEL = $quotation->cargo->package;
-       // $bill_header->QTY = $quotation->cargo->total_package;
-       // $bill_header->DOC_TYPE = 'INVOICE';
-     // $bill_header->STATUS = 'UNPOSTED';
-        foreach ($dms->quote->services as $service){
+          foreach ($dms->quote->services as $service){
+            $stockitem = StkItem::find($service->stk_id);
             $bill_details = BillDetail::create([
                 'DEPT_NAME' => 'AGENCY',
                 'ITEM_ID' => $service->tariff_id,
@@ -306,18 +294,6 @@ class DmsController extends Controller
                 'CURRENCY_ID' => $dms->Client_id
             ]);
         }
-//        $bill_details = new ESL_BILL_DETAILS;
-//        $bill_details->DEPT_NAME = 'LOGISTICS';
-//        $bill_details->CURRENCY_ID = $quotation->customer->iCurrencyID;
-//        $bill_details->HEADER_ID = $bill_header->SNo;
-//        $bill_details->ITEM_DESC = isset($stockitem->Description_2) ? $stockitem->Description_2 : ($stockitem->Description_3 ? $stockitem->Description_3  : $stockitem->Description_1);
-//        $bill_details->DOC_TYPE = 'INVOICE';
-//        $bill_details->ITEM_ID = $service->stock_link;
-//        $bill_details->ITEM_QTY = $service->total_units;
-//        $bill_details->UNIT_COST = $service->buying_price;
-//        $bill_details->UNIT_PRICE_EXCL = $service->selling_price;
-//        $bill_details->VAT = $service->tax;
-//        $bill_details->STATUS = 'UNPOSTED';
 
         $quotation->status = Constants::LEAD_QUOTATION_COMPLETED;
         $quotation->save();
@@ -368,16 +344,24 @@ class DmsController extends Controller
         unset($data['hour']);
         unset($data['min']);
         unset($data['sec']);
+        unset($data['project_id']);
+        unset($data['file_number']);
 
 //        dd($data,$dms);
         $dms->update($data);
+        $project_id='';
+ if (isset($request['project_id'])){
+     $project_id =  $request['project_id'];
+ }else{
+     $project_id = ProjectRepo::init()->generateName(str_replace("MV ","",$dms->vessel->name),$dms->vessel->imo_number)->makeProject()->ProjectLink;
+ }
 
-        $project_id = ProjectRepo::init()->generateName(str_replace("MV ","",$dms->vessel->name),$dms->vessel->imo_number)->makeProject();
-       // $project_id = ProjectRepo::init()->makeProject();
+        //$project_id = ProjectRepo::init()->makeProject();
      //    dd($project_id);
         $quote = Quotation::findOrFail($dms->quote_id);
-        $quote->project_id = $project_id->ProjectLink;
-        $quote->job_type_id = $request['job_type_id'];
+      //  dd($quote);
+        $quote->project_id = $project_id;
+        $quote->file_number = $request['file_number'];
         $quote->save();
 
         NotificationRepo::create()->message('PDA updated successfully','PDA Update');

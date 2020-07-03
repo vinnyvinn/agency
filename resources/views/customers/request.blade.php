@@ -171,6 +171,15 @@
                                                                 <input type="number" id="dwt" name="dwt"  class="form-control dwt" placeholder="Dead Weight - including provision">
                                                             </div>
                                                             <div class="form-group">
+                                                                <label for="job_type_id">Job Type</label>
+                                                                <select name="job_type_id" id="job_type_id" class="form-control" required>
+                                                                    <option value="">Select Job Type</option>
+                                                                    <option value="1">CHARTER AGENCY WORK</option>
+                                                                    <option value="2">LINER</option>
+                                                                    <option value="3">OPA - OWNER PROTECTIVE AGENTS</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <br>
                                                                 <input class="btn pull-right btn-primary" type="submit" value="Save">
                                                             </div>

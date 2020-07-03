@@ -50,6 +50,10 @@
                                                             <label for="berth_number">Berth Number</label>
                                                             <input type="text" required id="berth_number" name="berth_number" class="form-control">
                                                         </div>
+                                                        <div class="form-group">
+                                                            <label for="berth_number">File Number</label>
+                                                            <input type="text" required id="file_number" name="file_number" class="form-control">
+                                                        </div>
                                                        {{--  @if($dms->quote) --}}
                                                         @foreach($dms->quote->cargos as $cargo)
                                                             <div class="form-group">
@@ -73,16 +77,6 @@
                                                         <div class="form-group">
                                                             <label for="laytime_time">Lay Time Start(Time)</label>
                                                             <input type="text" required id="laytime_time" name="laytime_time" class="timepicker1 form-control">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="job_type_id">Job Type</label>
-                                                            <select name="job_type_id" id="job_type_id" class="form-control" required>
-                                                                <option value="">Select Job Type</option>
-                                                                <option value="1">CHARTER AGENCY WORK</option>
-                                                                <option value="2">LINER</option>
-                                                                <option value="3">OPA - OWNER PROTECTIVE AGENTS</option>
-                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -139,6 +133,16 @@
                                                         <div class="form-group">
                                                             <label for="number_of_crane">Total Number of Cranes </label>
                                                             <input type="number" required id="number_of_crane" name="number_of_crane" class="form-control cranes" placeholder="Total Number of Cranes">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="project_id">Project </label>
+                                                            <select name="project_id" id="project_id" class="form-control select2">
+                                                                <option value=""></option>
+                                                                @foreach($projects as $project)
+                                                                    <option value="{{$project->ProjectLink}}">{{$project->ProjectName}}</option>
+                                                                @endforeach
+                                                            </select>
+
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="">**Note you can still make Changes later</label>
