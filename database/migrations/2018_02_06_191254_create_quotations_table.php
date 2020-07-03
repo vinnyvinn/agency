@@ -24,6 +24,7 @@ class CreateQuotationsTable extends Migration
             $table->string('crm_ref')->nullable();
             $table->integer('service_type_id')->nullable();
             $table->string('remittance')->default(0);
+            $table->string('file_number')->nullable();
             $table->string('status');
             $table->timestamps();
         });
